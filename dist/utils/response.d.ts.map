@@ -1,0 +1,1 @@
+{"version":3,"file":"response.d.ts","sourceRoot":"","sources":["../../src/utils/response.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAE,QAAQ,EAAE,MAAM,SAAS,CAAC;AAExC,eAAO,MAAM,aAAa,GACzB,KAAK,QAAQ,EACb,MAAM,MAAM,EACZ,SAAS,MAAM,EACf,QAAQ,GAAG,SAOX,CAAC;AAEF,eAAO,MAAM,eAAe,GAC3B,KAAK,QAAQ,EACb,MAAM,MAAM,EACZ,SAAS,MAAM,EACf,OAAO,GAAG,SAOV,CAAC"}

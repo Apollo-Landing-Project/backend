@@ -8,9 +8,7 @@ import compression from "compression";
 import { xss } from "express-xss-sanitizer";
 import { router } from "./routes";
 import cookieParser from "cookie-parser";
-
 const app = express();
-
 // logger
 app.use(morgan("dev"));
 // set security HTTP headers
@@ -25,24 +23,10 @@ app.use(xss());
 // gzip compression
 app.use(compression());
 // enable cors
-const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:3000"];
-app.use(
-	cors({
-		origin(origin, callback) {
-			if (!origin || allowedOrigins.includes(origin)) {
-				callback(null, true);
-			} else {
-				callback(new Error("Not allowed by CORS"));
-			}
-		},
-		credentials: true,
-	}),
-);
-
+app.use(cors());
 app.use("/api", router);
-
 app.get("/health", (_req, res) => {
-	res.json({ message: "API running" });
+    res.json({ message: "API running" });
 });
-
 export default app;
+//# sourceMappingURL=app.js.map
