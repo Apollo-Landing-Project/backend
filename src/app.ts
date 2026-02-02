@@ -25,7 +25,7 @@ app.use(xss());
 // gzip compression
 app.use(compression());
 // enable cors
-const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:3000"];
+const allowedOrigins = process.env.ALLOWED_HOSTS?.split(",") || [];
 app.use(
 	cors({
 		origin(origin, callback) {
