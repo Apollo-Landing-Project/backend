@@ -17,8 +17,12 @@ export class AuthControllers {
 			const generateToken = AuthServices.generateToken(isExisted);
 			res.cookie("token", generateToken, {
 				httpOnly: true,
-				secure: envConfig.node_env === "production",
-				sameSite: "strict",
+				secure: process.env.NODE_ENV === "production",
+				sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
+				domain:
+					process.env.NODE_ENV === "production" ?
+						envConfig.cookie_domain || "evaluasipembelajaran.site"
+					:	"localhost",
 				path: "/",
 			});
 			responseSuccess(res, 200, "Login success", {
@@ -35,7 +39,11 @@ export class AuthControllers {
 			res.clearCookie("token", {
 				httpOnly: true,
 				secure: process.env.NODE_ENV === "production",
-				sameSite: "strict",
+				sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
+				domain:
+					process.env.NODE_ENV === "production" ?
+						envConfig.cookie_domain || "evaluasipembelajaran.site"
+					:	"localhost",
 				path: "/",
 			});
 
