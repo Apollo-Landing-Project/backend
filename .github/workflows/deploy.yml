@@ -23,7 +23,7 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
+          username: ${{ secrets.VPS_NAME }}
           key: ${{ secrets.VPS_KEY }}
           script: |
             cd ~/apollo/backend
