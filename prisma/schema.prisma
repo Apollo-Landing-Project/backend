@@ -19,7 +19,7 @@ model User {
   password      String
   name          String?
   role          Role    @default(SUPER_ADMIN)
-  profile_image String @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbm6QhXf5jqRZcX6R-lNF9sgaYnR0jtHKh0A&s")
+  profile_image String  @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbm6QhXf5jqRZcX6R-lNF9sgaYnR0jtHKh0A&s")
 }
 
 enum Role {

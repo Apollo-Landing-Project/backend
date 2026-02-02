@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import type { User } from "../../generated/prisma/client";
 import { db } from "../lib/prisma";
+import type { User } from "../../generated/prisma/client";
 
 export class UserServices {
 	static async findUserByEmail(email: string): Promise<User | null> {
