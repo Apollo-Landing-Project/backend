@@ -21,7 +21,7 @@ export class AuthControllers {
 				sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
 				domain:
 					process.env.NODE_ENV === "production" ?
-						envConfig.cookie_domain || "evaluasipembelajaran.site"
+						envConfig.cookie_domain || ".evaluasipembelajaran.site"
 					:	"localhost",
 				path: "/",
 			});
