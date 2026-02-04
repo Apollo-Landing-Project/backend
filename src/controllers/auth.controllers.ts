@@ -7,6 +7,20 @@ import { AuthServices } from "../services/auth.services";
 import { envConfig } from "../config/env.config";
 
 export class AuthControllers {
+	private static getCookieOptions() {
+		const isProd = process.env.NODE_ENV === "production";
+
+		return {
+			httpOnly: true,
+			secure: isProd,
+			sameSite: "lax" as const,
+			path: "/",
+			...(isProd && {
+				domain: envConfig.cookie_domain || ".evaluasipembelajaran.site",
+			}),
+		};
+	}
+
 	static async login(req: Request, res: Response) {
 		try {
 			const request: LoginInput = req.body;
@@ -15,16 +29,8 @@ export class AuthControllers {
 				request.password,
 			);
 			const generateToken = AuthServices.generateToken(isExisted);
-			res.cookie("token", generateToken, {
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
-				domain:
-					process.env.NODE_ENV === "production" ?
-						envConfig.cookie_domain || ".evaluasipembelajaran.site"
-					:	"localhost",
-				path: "/",
-			});
+			res.cookie("token", generateToken, this.getCookieOptions());
+
 			responseSuccess(res, 200, "Login success", {
 				...isExisted,
 				token: generateToken,
@@ -36,16 +42,7 @@ export class AuthControllers {
 
 	static async logout(req: Request, res: Response) {
 		try {
-			res.clearCookie("token", {
-				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: process.env.NODE_ENV === "production" ? "lax" : "lax",
-				domain:
-					process.env.NODE_ENV === "production" ?
-						envConfig.cookie_domain || ".evaluasipembelajaran.site"
-					:	"localhost",
-				path: "/",
-			});
+			res.clearCookie("token", this.getCookieOptions());
 
 			responseSuccess(res, 200, "Logout success");
 		} catch (e) {
