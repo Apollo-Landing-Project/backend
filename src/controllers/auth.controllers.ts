@@ -20,7 +20,6 @@ export class AuthControllers {
 			}),
 		};
 	}
-
 	static async login(req: Request, res: Response) {
 		try {
 			const request: LoginInput = req.body;
@@ -29,7 +28,8 @@ export class AuthControllers {
 				request.password,
 			);
 			const generateToken = AuthServices.generateToken(isExisted);
-			res.cookie("token", generateToken, this.getCookieOptions());
+
+			res.cookie("token", generateToken, AuthControllers.getCookieOptions());
 
 			responseSuccess(res, 200, "Login success", {
 				...isExisted,
@@ -42,7 +42,7 @@ export class AuthControllers {
 
 	static async logout(req: Request, res: Response) {
 		try {
-			res.clearCookie("token", this.getCookieOptions());
+			res.clearCookie("token", AuthControllers.getCookieOptions());
 
 			responseSuccess(res, 200, "Logout success");
 		} catch (e) {
