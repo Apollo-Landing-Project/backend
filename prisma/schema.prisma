@@ -26,3 +26,105 @@ enum Role {
   SUPER_ADMIN
   GUEST
 }
+
+model BerandaPage {
+  id                 String   @id @default(uuid())
+  // hero section
+  hero_title         String?
+  hero_desc          String?
+  hero_bg            String[]
+  // about us section
+  about_us_title     String?
+  about_us_desc      String?
+  about_us_years_exp Int?
+  about_us_products  Int?
+  about_us_countries Int?
+  about_us_brands    Int?
+  // services section
+  services_title     String?
+  services_desc      String?
+  // news section
+  news_title         String?
+  news_desc          String?
+  // partners section
+  partners_title     String?
+  partners_desc      String?
+  // contact section
+  contact_title      String?
+  contact_desc       String?
+  contact_email      String[]
+  contact_phone      String[]
+  contact_address    String?
+  contact_link_map   String?
+}
+
+model AboutUsPage {
+  id                  String   @id @default(uuid())
+  // hero section
+  hero_title          String?
+  hero_desc           String?
+  hero_bg             String?
+  // vision section
+  vision_title        String?
+  vision_desc         String?
+  vision_image_parent String?
+  vision_image_child  String?
+  vision_list         String[]
+  vision_quote        String?
+}
+
+model NewsPage {
+  id         String  @id @default(uuid())
+  // hero section
+  hero_title String?
+  hero_desc  String?
+  hero_bg    String?
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  title       String?
+  description String?
+  bg_image    String?
+  car_image   String[] // for used car gallery
+  order       Int?
+  location    String?
+  contact     String?
+  email       String?
+  quote       String?
+}
+
+model Partner {
+  id         String  @id @default(uuid())
+  name       String?
+  logo       String?
+  categoryId String?
+
+  category ParnetCategory? @relation(fields: [categoryId], references: [id])
+}
+
+model ParnetCategory {
+  id       String    @id @default(uuid())
+  name     String?
+  partners Partner[]
+}
+
+model News {
+  id          String        @id @default(uuid())
+  title       String?
+  description String?
+  isPublished Boolean       @default(false)
+  image       String?
+  publishedAt DateTime      @default(now())
+  author      String?
+  categoryId  String?
+  category    NewsCategory? @relation(fields: [categoryId], references: [id])
+}
+
+model NewsCategory {
+  id          String  @id @default(uuid())
+  name        String  @unique()
+  title       String?
+  description String?
+  news        News[]
+}
