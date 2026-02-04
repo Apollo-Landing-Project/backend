@@ -9,16 +9,15 @@ import { envConfig } from "../config/env.config";
 export class AuthControllers {
 	private static getCookieOptions() {
 		const isProd = process.env.NODE_ENV === "production";
-
-		return {
-			httpOnly: true,
-			secure: isProd,
-			sameSite: "lax" as const,
-			path: "/",
-			...(isProd && {
-				domain: envConfig.cookie_domain || ".evaluasipembelajaran.site",
-			}),
-		};
+		{
+			return {
+				httpOnly: true,
+				secure: true,
+				sameSite: "lax" as const, // HARUS sama
+				path: "/",
+				domain: ".evaluasipembelajaran.site", // HARUS sama
+			};
+		}
 	}
 
 	static async login(req: Request, res: Response) {
