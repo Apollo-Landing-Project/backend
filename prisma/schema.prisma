@@ -20,6 +20,9 @@ model User {
   name          String?
   role          Role    @default(SUPER_ADMIN)
   profile_image String  @default("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbm6QhXf5jqRZcX6R-lNF9sgaYnR0jtHKh0A&s")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Role {
@@ -27,39 +30,106 @@ enum Role {
   GUEST
 }
 
-model BerandaPage {
-  id                 String   @id @default(uuid())
+model HomePage {
+  id       String  @id @default(uuid())
+  isActive Boolean @default(false)
+
   // hero section
-  hero_title         String?
-  hero_desc          String?
-  hero_bg            String[]
+  hero_bg String[]
+
   // about us section
-  about_us_title     String?
-  about_us_desc      String?
   about_us_years_exp Int?
   about_us_products  Int?
   about_us_countries Int?
   about_us_brands    Int?
-  // services section
-  services_title     String?
-  services_desc      String?
-  // news section
-  news_title         String?
-  news_desc          String?
-  // partners section
-  partners_title     String?
-  partners_desc      String?
+
   // contact section
-  contact_title      String?
-  contact_desc       String?
-  contact_email      String[]
-  contact_phone      String[]
-  contact_address    String?
-  contact_link_map   String?
+  contact_email String[]
+  contact_phone String[]
+
+  // relations (1–1)
+  homePageId HomePageId?
+  homePageEn HomePageEn?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HomePageId {
+  id String @id @default(uuid())
+
+  // hero section
+  hero_title String?
+  hero_desc  String?
+
+  // about us section
+  about_us_title String?
+  about_us_desc  String?
+
+  // services section
+  services_title String?
+  services_desc  String?
+
+  // news section
+  news_title String?
+  news_desc  String?
+
+  // partners section
+  partners_title String?
+  partners_desc  String?
+
+  // contact section
+  contact_title   String?
+  contact_desc    String?
+  contact_address String?
+
+  // 1–1 relation
+  homePage   HomePage @relation(fields: [homePageId], references: [id])
+  homePageId String   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HomePageEn {
+  id String @id @default(uuid())
+
+  // hero section
+  hero_title String?
+  hero_desc  String?
+
+  // about us section
+  about_us_title String?
+  about_us_desc  String?
+
+  // services section
+  services_title String?
+  services_desc  String?
+
+  // news section
+  news_title String?
+  news_desc  String?
+
+  // partners section
+  partners_title String?
+  partners_desc  String?
+
+  // contact section
+  contact_title   String?
+  contact_desc    String?
+  contact_address String?
+
+  // 1–1 relation
+  homePage   HomePage @relation(fields: [homePageId], references: [id])
+  homePageId String   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model AboutUsPage {
   id                  String   @id @default(uuid())
+  isActive            Boolean  @default(false)
   // hero section
   hero_title          String?
   hero_desc           String?
@@ -71,14 +141,21 @@ model AboutUsPage {
   vision_image_child  String?
   vision_list         String[]
   vision_quote        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model NewsPage {
   id         String  @id @default(uuid())
+  isActive   Boolean @default(false)
   // hero section
   hero_title String?
   hero_desc  String?
   hero_bg    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Service {
@@ -92,6 +169,9 @@ model Service {
   contact     String?
   email       String?
   quote       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Partner {
@@ -101,12 +181,18 @@ model Partner {
   categoryId String?
 
   category ParnetCategory? @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ParnetCategory {
   id       String    @id @default(uuid())
   name     String?
   partners Partner[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model News {
@@ -119,6 +205,9 @@ model News {
   author      String?
   categoryId  String?
   category    NewsCategory? @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model NewsCategory {
@@ -127,4 +216,7 @@ model NewsCategory {
   title       String?
   description String?
   news        News[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

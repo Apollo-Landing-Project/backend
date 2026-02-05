@@ -8,7 +8,11 @@ export const customCatch = (e: unknown, res: Response) => {
 		const errors: Record<string, string> = {};
 
 		e.issues.forEach((issue) => {
-			const field = issue.path.join(".") || "body";
+			let field = issue.path.join(".");
+			if (field.startsWith("body.")) {
+				field = field.replace("body.", "");
+			}
+
 			errors[field] = issue.message;
 		});
 
