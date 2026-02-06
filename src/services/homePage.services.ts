@@ -73,9 +73,7 @@ export class HomePageServices {
 		const data = await db.homePage.findUnique({
 			where: { id },
 			include: {
-				homePageId: {
-					select: {},
-				},
+				homePageId: true,
 				homePageEn: true,
 			},
 		});
@@ -99,9 +97,6 @@ export class HomePageServices {
 
 		// Hapus file fisik
 		data.hero_bg.forEach((url) => {
-			// Logika untuk mengambil path relative dari URL absolute
-			// Misal URL: http://localhost:3000/storage/images/file.jpg
-			// Path: /apollo/storage/images/file.jpg
 			const filename = url.split("/").pop();
 			if (filename) {
 				const filePath = path.join("/apollo/storage/images", filename);
