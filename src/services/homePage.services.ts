@@ -21,7 +21,7 @@ export class HomePageServices {
 				contact_email: data.contact_email,
 				contact_phone: data.contact_phone,
 				contact_link_map: data.contact_link_map,
-				cotact_address: data.contact_address,
+				contact_address: data.contact_address,
 				homePageEn: {
 					create: {
 						hero_title: data.hero_title_en,

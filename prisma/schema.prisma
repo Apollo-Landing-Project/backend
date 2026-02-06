@@ -47,7 +47,7 @@ model HomePage {
   contact_email    String[]
   contact_phone    String[]
   contact_link_map String?
-  cotact_address   String?
+  contact_address  String?
 
   // relations (1–1)
   homePageId HomePageId?
