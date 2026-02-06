@@ -29,6 +29,5 @@ jobs:
             cd ~/apollo/backend
             git pull
             npm install
-            npm run db:push
             npm run db:gen
             pm2 restart apollo-backend
