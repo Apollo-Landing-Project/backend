@@ -44,8 +44,10 @@ model HomePage {
   about_us_brands    Int?
 
   // contact section
-  contact_email String[]
-  contact_phone String[]
+  contact_email    String[]
+  contact_phone    String[]
+  contact_link_map String?
+  cotact_address   String?
 
   // relations (1–1)
   homePageId HomePageId?
@@ -79,9 +81,8 @@ model HomePageId {
   partners_desc  String?
 
   // contact section
-  contact_title   String?
-  contact_desc    String?
-  contact_address String?
+  contact_title String?
+  contact_desc  String?
 
   // 1–1 relation
   homePage   HomePage @relation(fields: [homePageId], references: [id])
@@ -115,9 +116,8 @@ model HomePageEn {
   partners_desc  String?
 
   // contact section
-  contact_title   String?
-  contact_desc    String?
-  contact_address String?
+  contact_title String?
+  contact_desc  String?
 
   // 1–1 relation
   homePage   HomePage @relation(fields: [homePageId], references: [id])

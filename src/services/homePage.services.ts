@@ -12,7 +12,7 @@ export class HomePageServices {
 		const newHomePage = await db.homePage.create({
 			data: {
 				hero_bg: file_image.map(
-					(file) => `${envConfig.host_url}/${file.filename}`,
+					(file) => `${envConfig.host_url}/storage/${file.filename}`,
 				),
 				about_us_brands: Number(data.about_us_brands),
 				about_us_countries: Number(data.about_us_countries),
@@ -20,6 +20,8 @@ export class HomePageServices {
 				about_us_years_exp: Number(data.about_us_years_exp),
 				contact_email: data.contact_email,
 				contact_phone: data.contact_phone,
+				contact_link_map: data.contact_link_map,
+				cotact_address: data.contact_address,
 				homePageEn: {
 					create: {
 						hero_title: data.hero_title_en,
@@ -32,7 +34,6 @@ export class HomePageServices {
 						news_desc: data.news_desc_en,
 						contact_title: data.contact_title_en,
 						contact_desc: data.contact_desc_en,
-						contact_address: data.contact_address,
 						partners_title: data.partners_title_en,
 						partners_desc: data.partners_desc_en,
 					},
@@ -49,7 +50,6 @@ export class HomePageServices {
 						news_desc: data.news_desc,
 						contact_title: data.contact_title,
 						contact_desc: data.contact_desc,
-						contact_address: data.contact_address,
 						partners_title: data.partners_title,
 						partners_desc: data.partners_desc,
 					},
@@ -72,7 +72,12 @@ export class HomePageServices {
 	static async getById(id: string) {
 		const data = await db.homePage.findUnique({
 			where: { id },
-			include: { homePageId: true, homePageEn: true },
+			include: {
+				homePageId: {
+					select: {},
+				},
+				homePageEn: true,
+			},
 		});
 		if (!data) throw new Error("Home Page not found");
 		return data;
