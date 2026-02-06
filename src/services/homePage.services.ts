@@ -12,7 +12,7 @@ export class HomePageServices {
 		const newHomePage = await db.homePage.create({
 			data: {
 				hero_bg: file_image.map(
-					(file) => `${envConfig.host_url}/storage/${file.filename}`,
+					(file) => `${envConfig.host_url}/storage/image/${file.filename}`,
 				),
 				about_us_brands: Number(data.about_us_brands),
 				about_us_countries: Number(data.about_us_countries),
