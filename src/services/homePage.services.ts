@@ -12,7 +12,7 @@ export class HomePageServices {
 		const newHomePage = await db.homePage.create({
 			data: {
 				hero_bg: file_image.map(
-					(file) => `${envConfig.host_url}/storage/image/${file.filename}`,
+					(file) => `${envConfig.host_url}/storage/images/${file.filename}`,
 				),
 				about_us_brands: Number(data.about_us_brands),
 				about_us_countries: Number(data.about_us_countries),
@@ -134,7 +134,8 @@ export class HomePageServices {
 
 				const newFile = files[fileIndex];
 				if (newFile) {
-					newHeroBg[i] = `${process.env.HOST_URL}/images/${newFile.filename}`;
+					newHeroBg[i] =
+						`${envConfig.host_url}/storage/images/${newFile.filename}`;
 					fileIndex++;
 				}
 			}
@@ -144,12 +145,15 @@ export class HomePageServices {
 			where: { id },
 			data: {
 				hero_bg: newHeroBg,
+				contact_address: data.contact_address,
+				contact_link_map: data.contact_link_map,
 				about_us_brands: Number(data.about_us_brands),
 				about_us_countries: Number(data.about_us_countries),
 				about_us_products: Number(data.about_us_products),
 				about_us_years_exp: Number(data.about_us_years_exp),
 				contact_email: data.contact_email,
 				contact_phone: data.contact_phone,
+
 				homePageEn: {
 					update: {
 						hero_title: data.hero_title_en,
@@ -162,7 +166,6 @@ export class HomePageServices {
 						news_desc: data.news_desc_en,
 						contact_title: data.contact_title_en,
 						contact_desc: data.contact_desc_en,
-						contact_address: data.contact_address,
 						partners_title: data.partners_title_en,
 						partners_desc: data.partners_desc_en,
 					},
@@ -179,7 +182,6 @@ export class HomePageServices {
 						news_desc: data.news_desc,
 						contact_title: data.contact_title,
 						contact_desc: data.contact_desc,
-						contact_address: data.contact_address,
 						partners_title: data.partners_title,
 						partners_desc: data.partners_desc,
 					},
