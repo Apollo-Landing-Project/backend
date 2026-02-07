@@ -21,7 +21,6 @@ homePageRoutes.patch("/home/:id/active", HomePageControllers.toggleActive);
 // Update Route
 homePageRoutes.put(
 	"/home/:id",
-	uploadImage.array("hero_bg", 3), // Max 3 file baru
-	// validate(homePageUpdateSchema), // Buat schema update yg fieldnya optional
+	uploadImage.array("hero_bg", 3),
 	HomePageControllers.update,
 );

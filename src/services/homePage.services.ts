@@ -189,4 +189,32 @@ export class HomePageServices {
 			},
 		});
 	}
+
+	static async clientGet(lang: string) {
+		if (lang === "en") {
+			const home = await db.homePage.findFirst({
+				where: {
+					isActive: true,
+				},
+				include: {
+					homePageEn: true,
+				},
+			});
+			if (!home || !home.homePageEn) throw new Error("Home Page not found");
+
+			return home;
+		} else {
+			const home = await db.homePage.findFirst({
+				where: {
+					isActive: true,
+				},
+				include: {
+					homePageId: true,
+				},
+			});
+			if (!home || !home.homePageId) throw new Error("Home Page not found");
+
+			return home;
+		}
+	}
 }
