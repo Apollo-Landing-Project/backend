@@ -1,3 +1,4 @@
+import type { HomePage } from "../../generated/prisma/client";
 import { envConfig } from "../config/env.config";
 import { db } from "../lib/prisma";
 import type { HomePageCreateInput } from "../models/homePage.models";
@@ -104,7 +105,11 @@ export class HomePageServices {
 			}
 		});
 
-		return await db.homePage.delete({ where: { id } });
+		return await db.$transaction(async (tx) => {
+			await tx.homePageId.delete({ where: { homePageId: id } });
+			await tx.homePageEn.delete({ where: { homePageId: id } });
+			await tx.homePage.delete({ where: { id } });
+		});
 	}
 
 	static async update(id: string, data: any, files: Express.Multer.File[]) {
@@ -190,31 +195,64 @@ export class HomePageServices {
 		});
 	}
 
-	static async clientGet(lang: string) {
-		if (lang === "en") {
-			const home = await db.homePage.findFirst({
-				where: {
-					isActive: true,
-				},
-				include: {
-					homePageEn: true,
-				},
-			});
-			if (!home || !home.homePageEn) throw new Error("Home Page not found");
+	static async getClient(lang: string) {
+		const home = await db.homePage.findFirst({
+			where: {
+				isActive: true,
+			},
+			include: {
+				homePageEn: true,
+				homePageId: true,
+			},
+		});
 
-			return home;
-		} else {
-			const home = await db.homePage.findFirst({
-				where: {
-					isActive: true,
-				},
-				include: {
-					homePageId: true,
-				},
-			});
-			if (!home || !home.homePageId) throw new Error("Home Page not found");
+		if (!home) throw new Error("Home Page not found");
 
-			return home;
-		}
+		const content = lang === "en" ? home.homePageEn : home.homePageId;
+
+		if (!content) throw new Error("Home Page Content not found");
+
+		return {
+			id: home.id,
+
+			hero: {
+				title: content.hero_title,
+				desc: content.hero_desc,
+				background: home.hero_bg,
+			},
+
+			about: {
+				title: content.about_us_title,
+				desc: content.about_us_desc,
+				yearsExp: home.about_us_years_exp,
+				products: home.about_us_products,
+				countries: home.about_us_countries,
+				brands: home.about_us_brands,
+			},
+
+			services: {
+				title: content.services_title,
+				desc: content.services_desc,
+			},
+
+			news: {
+				title: content.news_title,
+				desc: content.news_desc,
+			},
+
+			partners: {
+				title: content.partners_title,
+				desc: content.partners_desc,
+			},
+
+			contact: {
+				title: content.contact_title,
+				desc: content.contact_desc,
+				email: home.contact_email,
+				phone: home.contact_phone,
+				address: home.contact_address,
+				mapLink: home.contact_link_map,
+			},
+		};
 	}
 }

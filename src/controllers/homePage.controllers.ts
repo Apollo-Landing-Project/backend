@@ -116,7 +116,7 @@ export class HomePageControllers {
 			const { lang } = req.query as { lang?: string };
 			if (!lang) throw new Error("Language is required");
 
-			const response = await HomePageServices.clientGet(lang);
+			const response = await HomePageServices.getClient(lang);
 			responseSuccess(res, 200, "Home page retrieved successfully", response);
 		} catch (e) {
 			customCatch(e, res);
