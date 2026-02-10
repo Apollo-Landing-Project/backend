@@ -5,6 +5,7 @@ import { responseSuccess } from "../utils/response";
 import { homePageRoutes } from "./homePage.routes";
 import translateRoutes from "./translate.routes";
 import { clientAllPage } from "./clientAllPage.route";
+import { newsPageRoutes } from "./newsPage.routes";
 
 export const router = Router();
 
@@ -18,4 +19,5 @@ router.use("/protected", (req: Request, res: Response) => {
 	responseSuccess(res, 200, "Suuceesss", { testing: "HELLO WORLD" });
 });
 router.use("/page", homePageRoutes);
+router.use("/page", newsPageRoutes);
 router.use(translateRoutes);
