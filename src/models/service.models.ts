@@ -40,7 +40,7 @@ export const serviceItemSchema = z.object({
 	// EN
 	title_en: z.string().min(1, "Title (EN) is required"),
 	desc_en: z.string().min(1, "Description (EN) is required"),
-	quote_en: z.string().optional().or(z.literal("")),
+	quote_en: z.string().or(z.literal("")),
 	location_en: z.string().min(1, "Location (EN) is required"),
 
 	// Meta (Order)
