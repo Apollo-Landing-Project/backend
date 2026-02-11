@@ -128,19 +128,122 @@ model HomePageEn {
 }
 
 model AboutUsPage {
-  id                  String   @id @default(uuid())
-  isActive            Boolean  @default(false)
-  // hero section
-  hero_title          String?
-  hero_desc           String?
-  hero_bg             String?
-  // vision section
-  vision_title        String?
-  vision_desc         String?
-  vision_image_parent String?
-  vision_image_child  String?
-  vision_list         String[]
-  vision_quote        String?
+  id       String  @id @default(uuid())
+  isActive Boolean @default(false)
+
+  // Global Images (Shared)
+  hero_bg              String?
+  vision_image_parent  String?
+  vision_image_child   String?
+  mission_image_parent String?
+  mission_image_child  String?
+  history_image_parent String?
+  history_image_child  String?
+
+  // Relations
+  aboutUsPageId AboutUsPageId?
+  aboutUsPageEn AboutUsPageEn?
+
+  governances       Governance[]
+  companyStructures CompanyStructure[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model AboutUsPageId {
+  id String @id @default(uuid())
+
+  hero_title String?
+  hero_desc  String?
+
+  vision_title String?
+  vision_desc  String?
+  vision_quote String?
+  vision_list  String[]
+
+  mission_title String?
+  mission_desc  String?
+  mission_quote String?
+  mission_list  String[]
+
+  history_title String?
+  history_desc  String?
+
+  company_structure_title String?
+  company_structure_desc  String?
+
+  boc_title String?
+  boc_desc  String?
+  bod_title String?
+  bod_desc  String?
+
+  aboutUsPage   AboutUsPage @relation(fields: [aboutUsPageId], references: [id], onDelete: Cascade)
+  aboutUsPageId String      @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AboutUsPageEn {
+  id String @id @default(uuid())
+
+  hero_title String?
+  hero_desc  String?
+
+  vision_title String?
+  vision_desc  String?
+  vision_quote String?
+  vision_list  String[]
+
+  mission_title String?
+  mission_desc  String?
+  mission_quote String?
+  mission_list  String[]
+
+  history_title String?
+  history_desc  String?
+
+  company_structure_title String?
+  company_structure_desc  String?
+
+  boc_title String?
+  boc_desc  String?
+  bod_title String?
+  bod_desc  String?
+
+  aboutUsPage   AboutUsPage @relation(fields: [aboutUsPageId], references: [id], onDelete: Cascade)
+  aboutUsPageId String      @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Position {
+  BOD
+  BOC
+}
+
+model Governance {
+  id            String   @id @default(uuid())
+  name          String
+  position      Position
+  position_desc String
+  photo_image   String? // URL
+
+  aboutUsPage   AboutUsPage? @relation(fields: [aboutUsPageId], references: [id])
+  aboutUsPageId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CompanyStructure {
+  id         String  @id @default(uuid())
+  name       String
+  icon_image String? // URL
+
+  aboutUsPage   AboutUsPage? @relation(fields: [aboutUsPageId], references: [id])
+  aboutUsPageId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -197,20 +300,116 @@ model NewsPageId {
   updatedAt DateTime @updatedAt
 }
 
-model Service {
-  id          String   @id @default(uuid())
-  title       String?
-  description String?
-  bg_image    String?
-  car_image   String[] // for used car gallery
-  order       Int?
-  location    String?
-  contact     String?
-  email       String?
-  quote       String?
+model ServicePage {
+  id       String  @id @default(uuid())
+  hero_bg  String?
+  isActive Boolean @default(false)
+
+  servicePageEn ServicePageEn?
+  servicePageId ServicePageId?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ServicePageId {
+  id String @id @default(uuid())
+
+  // Hero Section
+  hero_title String?
+  hero_desc  String?
+
+  // Titles for Sections
+  used_car_gallery_title String?
+  used_car_gallery_desc  String?
+
+  servicePage   ServicePage @relation(fields: [servicePageId], references: [id], onDelete: Cascade)
+  servicePageId String      @unique
+}
+
+model ServicePageEn {
+  id String @id @default(uuid())
+
+  // Hero Section
+  hero_title String?
+  hero_desc  String?
+
+  // Titles for Sections
+  used_car_gallery_title String?
+  used_car_gallery_desc  String?
+
+  servicePage   ServicePage @relation(fields: [servicePageId], references: [id], onDelete: Cascade)
+  servicePageId String      @unique
+}
+
+model Service {
+  id       String  @id @default(uuid())
+  bg_image String? // Global Image
+
+  isActive Boolean @default(true)
+  order    Int     @default(0)
+
+  // Relations (One to One)
+  serviceEn ServiceEn?
+  serviceId ServiceId?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ServiceId {
+  id       String   @id @default(uuid())
+  title    String?
+  desc     String?
+  location String?
+  contact  String[]
+  email    String[]
+  quote    String?
+
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId String  @unique
+}
+
+model ServiceEn {
+  id       String   @id @default(uuid())
+  title    String?
+  desc     String?
+  location String?
+  contact  String[]
+  email    String[]
+  quote    String?
+
+  service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId String  @unique
+}
+
+model CarGallery {
+  id        String  @id @default(uuid())
+  car_image String? // Global Image
+
+  carGalleryId CarGalleryId?
+  carGalleryEn CarGalleryEn?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CarGalleryId {
+  id    String  @id @default(uuid())
+  title String?
+  desc  String?
+
+  carGallery   CarGallery @relation(fields: [carGalleryId], references: [id], onDelete: Cascade)
+  carGalleryId String     @unique
+}
+
+model CarGalleryEn {
+  id    String  @id @default(uuid())
+  title String?
+  desc  String?
+
+  carGallery   CarGallery @relation(fields: [carGalleryId], references: [id], onDelete: Cascade)
+  carGalleryId String     @unique
 }
 
 model Partner {

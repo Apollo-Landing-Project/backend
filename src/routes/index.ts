@@ -6,6 +6,9 @@ import { homePageRoutes } from "./homePage.routes";
 import translateRoutes from "./translate.routes";
 import { clientAllPage } from "./clientAllPage.route";
 import { newsPageRoutes } from "./newsPage.routes";
+import { aboutUsPageRoutes } from "./aboutUsPage.routes";
+import { servicesPageRoutes } from "./servicePage.routes";
+import { serviceRoutes } from "./service.routes";
 
 export const router = Router();
 
@@ -20,4 +23,7 @@ router.use("/protected", (req: Request, res: Response) => {
 });
 router.use("/page", homePageRoutes);
 router.use("/page", newsPageRoutes);
+router.use("/page", aboutUsPageRoutes);
+router.use("/page", servicesPageRoutes);
+router.use("/service", serviceRoutes);
 router.use(translateRoutes);
