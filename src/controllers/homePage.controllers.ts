@@ -110,16 +110,4 @@ export class HomePageControllers {
 			customCatch(e, res);
 		}
 	}
-
-	static async getClient(req: Request, res: Response) {
-		try {
-			const { lang } = req.query as { lang?: string };
-			if (!lang) throw new Error("Language is required");
-
-			const response = await HomePageServices.getClient(lang);
-			responseSuccess(res, 200, "Home page retrieved successfully", response);
-		} catch (e) {
-			customCatch(e, res);
-		}
-	}
 }
