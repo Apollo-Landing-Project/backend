@@ -412,47 +412,177 @@ model CarGalleryEn {
   carGalleryId String     @unique
 }
 
+enum PartnerCategory {
+  INSURANCE
+  FUNDING
+}
+
 model Partner {
-  id         String  @id @default(uuid())
+  id         String          @id @default(uuid())
   name       String?
-  logo       String?
-  categoryId String?
-
-  category ParnetCategory? @relation(fields: [categoryId], references: [id])
+  logo_image String?
+  category   PartnerCategory @default(INSURANCE)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model ParnetCategory {
-  id       String    @id @default(uuid())
-  name     String?
-  partners Partner[]
+model NewsNews {
+  id           String   @id @default(uuid())
+  isPublished  Boolean  @default(false)
+  image        String?
+  author       String?
+  author_image String?
+  publishedAt  DateTime @default(now())
+
+  newsNewsId NewsNewsId?
+  newsNewsEn NewsNewsEn?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model News {
-  id          String        @id @default(uuid())
+model NewsNewsId {
+  id          String  @id @default(uuid())
   title       String?
   description String?
-  isPublished Boolean       @default(false)
-  image       String?
-  publishedAt DateTime      @default(now())
-  author      String?
-  categoryId  String?
-  category    NewsCategory? @relation(fields: [categoryId], references: [id])
+  content     String?
+
+  newsNews   NewsNews @relation(fields: [newsNewsId], references: [id], onDelete: Cascade)
+  newsNewsId String   @unique
+}
+
+model NewsNewsEn {
+  id          String  @id @default(uuid())
+  title       String?
+  description String?
+  content     String?
+
+  newsNews   NewsNews @relation(fields: [newsNewsId], references: [id], onDelete: Cascade)
+  newsNewsId String   @unique
+}
+
+model NewsCSR {
+  id          String  @id @default(uuid())
+  isPublished Boolean @default(false)
+
+  author       String?
+  author_image String?
+  publishedAt  DateTime @default(now())
+
+  newsCSRId    NewsCSRId?
+  newsCSREn    NewsCSREn?
+  newsCSRImage NewsCSRImage[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model NewsCategory {
-  id   String @id @default(uuid())
-  name String @unique()
-  news News[]
+model NewsCSRImage {
+  id             String  @id @default(uuid())
+  image          String
+  description_en String?
+  description_id String?
+  newsCSRId      String
+
+  newsCSR NewsCSR @relation(fields: [newsCSRId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model NewsCSRId {
+  id          String  @id @default(uuid())
+  title       String?
+  description String?
+  content     String?
+
+  newsCSR   NewsCSR @relation(fields: [newsCSRId], references: [id], onDelete: Cascade)
+  newsCSRId String  @unique
+}
+
+model NewsCSREn {
+  id          String  @id @default(uuid())
+  title       String?
+  description String?
+  content     String?
+
+  newsCSR   NewsCSR @relation(fields: [newsCSRId], references: [id], onDelete: Cascade)
+  newsCSRId String  @unique
+}
+
+model InvestorPage {
+  id       String  @id @default(uuid())
+  isActive Boolean @default(false)
+  hero_bg  String?
+
+  inverstorPageId InvestorPageId?
+  inverstorPageEn InvestorPageEn?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InvestorPageId {
+  id String @id @default(uuid())
+
+  hero_title         String?
+  hero_desc          String
+  shareholders_title String?
+  shareholders_desc  String?
+
+  investorPage   InvestorPage @relation(fields: [investorPageId], references: [id], onDelete: Cascade)
+  investorPageId String       @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model InvestorPageEn {
+  id String @id @default(uuid())
+
+  hero_title         String?
+  hero_desc          String
+  shareholders_title String?
+  shareholders_desc  String?
+
+  investorPage   InvestorPage @relation(fields: [investorPageId], references: [id], onDelete: Cascade)
+  investorPageId String       @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Saham
+model Shares {
+  id       String @id @default(uuid())
+  category String @unique // eg. Public  or Private(PT Sinar Solusindo Sejahtera)
+  value    String // 1445000000 (contoh)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Report {
+  id             String   @id @default(uuid())
+  title_id       String?
+  title_en       String?
+  description_id String?
+  description_en String?
+  file_url       String? // ini nantinya berupa pdf/word/excel
+  publish_at     DateTime
+  is_publish     Boolean  @default(true)
+
+  reportCategory   ReportCategory @relation(fields: [reportCategoryId], references: [id], onDelete: Cascade)
+  reportCategoryId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ReportCategory {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  reports     Report[]
 }

@@ -39,4 +39,43 @@ export class ClientAllController {
 			customCatch(e, res);
 		}
 	}
+
+	static async getNewsPage(req: Request, res: Response) {
+		try {
+			const { lang } = req.query as { lang?: string };
+			if (!lang) throw new Error("Language is required");
+
+			const response = await ClientAllService.getNewsPage(lang);
+			responseSuccess(res, 200, "News page retrieved successfully", response);
+		} catch (e) {
+			customCatch(e, res);
+		}
+	}
+
+	static async getNewsDetail(req: Request, res: Response) {
+		try {
+			const { id } = req.params as { id: string };
+			const { lang } = req.query as { lang?: string };
+			if (!lang) throw new Error("Language is required");
+
+			const response = await ClientAllService.getNewsDetail(id, lang);
+			responseSuccess(res, 200, "News detail retrieved successfully", response);
+		} catch (e) {
+			customCatch(e, res);
+		}
+	}
+
+	static async getNewsCSRDetail(req: Request, res: Response) {
+		try {
+			const { id } = req.params as { id: string };
+			const { lang } = req.query as { lang?: string };
+			if (!lang) throw new Error("Language is required");
+
+			const response = await ClientAllService.getNewsCSRDetail(id, lang);
+			responseSuccess(res, 200, "News CSR detail retrieved successfully", response);
+		} catch (e) {
+			customCatch(e, res);
+		}
+	}
+
 }

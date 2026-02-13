@@ -11,3 +11,6 @@ clientAllPage.get("/about-us", ClientAllController.getAboutUsPage);
 
 // Service Page Routes
 clientAllPage.get("/service", ClientAllController.getServicePage);
+
+// News Page Routes
+clientAllPage.get("/news", ClientAllController.getNewsPage);

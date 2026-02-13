@@ -240,4 +240,150 @@ export class ClientAllService {
             },
         };
     }
+
+    static async getNewsPage(lang: string) {
+        // 1. Get active NewsPage with lang content
+        const newsPage = await db.newsPage.findFirst({
+            where: { isActive: true },
+            include: {
+                newsPageEn: true,
+                newsPageId: true,
+            },
+        });
+
+        if (!newsPage) throw new Error("News Page not found");
+
+        const pageContent = lang === "en" ? newsPage.newsPageEn : newsPage.newsPageId;
+        if (!pageContent) throw new Error("News Page Content not found");
+
+        // 2. Get published NewsNews
+        const newsNewsList = await db.newsNews.findMany({
+            where: { isPublished: true },
+            orderBy: { publishedAt: "desc" },
+            include: {
+                newsNewsEn: true,
+                newsNewsId: true,
+            },
+        });
+
+        const newsItems = newsNewsList.map((item) => {
+            const content = lang === "en" ? item.newsNewsEn : item.newsNewsId;
+            return {
+                id: item.id,
+                title: content?.title,
+                description: content?.description,
+                image: item.image,
+                author: item.author,
+                authorImage: item.author_image,
+                publishedAt: item.publishedAt,
+            };
+        });
+
+        // 3. Get published NewsCSR
+        const csrList = await db.newsCSR.findMany({
+            where: { isPublished: true },
+            orderBy: { publishedAt: "desc" },
+            include: {
+                newsCSREn: true,
+                newsCSRId: true,
+                newsCSRImage: true,
+            },
+        });
+
+        const csrItems = csrList.map((item) => {
+            const content = lang === "en" ? item.newsCSREn : item.newsCSRId;
+            return {
+                id: item.id,
+                title: content?.title,
+                description: content?.description,
+                author: item.author,
+                authorImage: item.author_image,
+                publishedAt: item.publishedAt,
+                images: item.newsCSRImage.map((img) => ({
+                    id: img.id,
+                    image: img.image,
+                    description: lang === "en" ? img.description_en : img.description_id,
+                })),
+            };
+        });
+
+        return {
+            id: newsPage.id,
+
+            hero: {
+                title: pageContent.hero_title,
+                desc: pageContent.hero_desc,
+                background: newsPage.hero_bg,
+            },
+
+            newsSection: {
+                title: pageContent.news_title,
+                desc: pageContent.news_desc,
+            },
+
+            csrSection: {
+                title: pageContent.csr_title,
+                desc: pageContent.csr_desc,
+            },
+
+            news: newsItems,
+            csr: csrItems,
+        };
+    }
+
+    static async getNewsDetail(id: string, lang: string) {
+        const news = await db.newsNews.findUnique({
+            where: { id },
+            include: {
+                newsNewsEn: true,
+                newsNewsId: true,
+            },
+        });
+
+        if (!news) throw new Error("News not found");
+
+        const content = lang === "en" ? news.newsNewsEn : news.newsNewsId;
+        if (!content) throw new Error("News Content not found");
+
+        return {
+            id: news.id,
+            title: content.title,
+            description: content.description,
+            content: content.content,
+            image: news.image,
+            author: news.author,
+            authorImage: news.author_image,
+            publishedAt: news.publishedAt,
+        };
+    }
+
+    static async getNewsCSRDetail(id: string, lang: string) {
+        const news = await db.newsCSR.findUnique({
+            where: { id },
+            include: {
+                newsCSREn: true,
+                newsCSRId: true,
+                newsCSRImage: true,
+            },
+        });
+
+        if (!news) throw new Error("News CSR not found");
+
+        const content = lang === "en" ? news.newsCSREn : news.newsCSRId;
+        if (!content) throw new Error("News CSR Content not found");
+
+        return {
+            id: news.id,
+            title: content.title,
+            description: content.description,
+            content: content.content,
+            image: news.newsCSRImage.map((img) => ({
+                image: img.image,
+                description: lang === "en" ? img.description_en : img.description_id,
+            })),
+            author: news.author,
+            authorImage: news.author_image,
+            publishedAt: news.publishedAt,
+        };
+    }
 }
