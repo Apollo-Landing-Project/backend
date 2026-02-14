@@ -1,0 +1,45 @@
+Attempting to fetch HomePages...
+(node:7652) Warning: SECURITY WARNING: The SSL modes 'prefer', 'require', and 'verify-ca' are treated as aliases for 'verify-full'.
+In the next major version (pg-connection-string v3.0.0 and pg v9.0.0), these modes will adopt standard libpq semantics, which have weaker security guarantees.
+
+To prepare for this change:
+- If you want the current behavior, explicitly use 'sslmode=verify-full'
+- If you want libpq compatibility now, use 'uselibpqcompat=true&sslmode=require'
+
+See https://www.postgresql.org/docs/current/libpq-ssl.html for libpq SSL mode definitions.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Caught Error:
+PrismaClientKnownRequestError: 
+Invalid `db.homePage.findMany()` invocation in
+d:\PROJECT\apollo-global-interactive\backend\repro.ts:6:36
+
+  3 async function main() {
+  4   console.log("Attempting to fetch HomePages...");
+  5   try {
+→ 6     const data = await db.homePage.findMany(
+The column `(not available)` does not exist in the current database.
+    at Vr.handleRequestError (d:\PROJECT\apollo-global-interactive\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:228:13)
+    at Vr.handleAndLogRequestError (d:\PROJECT\apollo-global-interactive\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:174:12)
+    at Vr.request (d:\PROJECT\apollo-global-interactive\backend\node_modules\@prisma\client\src\runtime\RequestHandler.ts:143:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async a (d:\PROJECT\apollo-global-interactive\backend\node_modules\@prisma\client\src\runtime\getPrismaClient.ts:805:24)
+    at async main (d:\PROJECT\apollo-global-interactive\backend\repro.ts:6:18) {
+  code: 'P2022',
+  meta: {
+    modelName: 'HomePage',
+    driverAdapterError: DriverAdapterError: ColumnNotFound
+        at PrismaPgAdapter.onError (file:///d:/PROJECT/apollo-global-interactive/backend/node_modules/@prisma/adapter-pg/dist/index.mjs:651:11)
+        at PrismaPgAdapter.performIO (file:///d:/PROJECT/apollo-global-interactive/backend/node_modules/@prisma/adapter-pg/dist/index.mjs:646:12)
+        at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+        at async PrismaPgAdapter.queryRaw (file:///d:/PROJECT/apollo-global-interactive/backend/node_modules/@prisma/adapter-pg/dist/index.mjs:566:30)
+        at async e.interpretNode (d:\PROJECT\apollo-global-interactive\backend\node_modules\@prisma\client-engine-runtime\src\interpreter\query-interpreter.ts:182:26)
+        at async <anonymous> (d:\PROJECT\apollo-global-interactive\backend\node_modules\@prisma\client-engine-runtime\src\interpreter\query-interpreter.ts:242:28)
+        at async Promise.all (index 2)
+        at async e.interpretNode (d:\PROJECT\apollo-global-interactive\backend\node_modules\@prisma\client-engine-runtime\src\interpreter\query-interpreter.ts:239:27)
+        at async e.interpretNode (d:\PROJECT\apollo-global-interactive\backend\node_modules\@prisma\client-engine-runtime\src\interpreter\query-interpreter.ts:268:41)
+        at async e.run (d:\PROJECT\apollo-global-interactive\backend\node_modules\@prisma\client-engine-runtime\src\interpreter\query-interpreter.ts:93:23) {
+      cause: [Object]
+    }
+  },
+  clientVersion: '7.3.0'
+}

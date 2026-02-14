@@ -72,15 +72,26 @@ export class HomePageServices {
 		return newHomePage;
 	}
 
+	// static async getAll() {
+	// 	return await db.homePage.findMany({
+	// 		orderBy: { createdAt: "desc" },
+	// 		include: {
+	// 			homePageId: true,
+	// 			homePageEn: true,
+	// 			heroSlides: { orderBy: { order: "asc" } },
+	// 		},
+	// 	});
+	// }
+
 	static async getAll() {
 		return await db.homePage.findMany({
-			orderBy: { createdAt: "desc" },
+			orderBy: {createdAt: "desc"},
 			include: {
-				homePageId: true,
-				homePageEn: true,
-				heroSlides: { orderBy: { order: "asc" } },
-			},
-		});
+				homePageId:true,
+				homePageEn:true,
+				heroSlides: true
+			}
+		})
 	}
 
 	static async getById(id: string) {
