@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ClientAllController } from "../controllers/clientAllPage";
+import { ClientAllController } from "../controllers/clientAllPage.controllers";
 
 export const clientAllPage = Router();
 
@@ -14,3 +14,8 @@ clientAllPage.get("/service", ClientAllController.getServicePage);
 
 // News Page Routes
 clientAllPage.get("/news", ClientAllController.getNewsPage);
+clientAllPage.get("/news/csr/:id", ClientAllController.getNewsCSRDetail);
+clientAllPage.get("/news/:id", ClientAllController.getNewsDetail);
+
+// Investor Page Routes
+clientAllPage.get("/investor", ClientAllController.getInvestorRelationPage);

@@ -1,6 +1,20 @@
+import { title } from "node:process";
 import { db } from "../lib/prisma";
 
 export class ClientAllService {
+    static async getMetadata(lang:string, destination:string) {
+        const metadata = await db.metadata.findUnique({
+                        where: {
+                            destination
+                        }
+                    })
+                    if(!metadata) throw new Error("Metadata not found");
+                    const metadatafilter = {
+                        title: lang === "en" ? metadata.title_en : metadata.title_id,
+                        description: lang === "en" ? metadata.description_en : metadata.description_id
+                    }
+                    return metadatafilter;
+    }
     static async getHomePage(lang: string) {
         const home = await db.homePage.findFirst({
             where: {
@@ -9,23 +23,72 @@ export class ClientAllService {
             include: {
                 homePageEn: true,
                 homePageId: true,
+                heroSlides: true,
             },
         });
 
         if (!home) throw new Error("Home Page not found");
 
+        const serviceItems = await db.service.findMany({
+            where: {
+                isActive: true,
+            },
+            orderBy: {
+                order: "asc"
+            },
+            include: {
+                serviceEn: true,
+                serviceId: true
+            }
+        })
+        const newsItems = await db.newsNews.findMany({
+            where: {
+                isPublished: true,
+            }, 
+            orderBy: {
+                publishedAt: "desc"
+            },
+            include: {
+                newsNewsEn: true,
+                newsNewsId: true,
+            }
+        })
+        const partnersFunding = await db.partner.findMany({
+            where: {
+                category: "FUNDING"
+            },
+            orderBy: {
+                createdAt: "asc"
+            },
+        })
+        const partnersInsurance = await db.partner.findMany({
+            where: {
+                category: "INSURANCE"
+            },
+            orderBy: {
+                createdAt: "asc"
+            }
+        })
+
         const content = lang === "en" ? home.homePageEn : home.homePageId;
+        const heroSlides = lang == "en" ? home.heroSlides.map((slide) => ({
+            id: slide.id,
+            title: slide.title_en,
+            desc: slide.desc_en,
+            background: slide.bg_image,
+        })) : home.heroSlides.map((slide) => ({
+            id: slide.id,
+            title: slide.title_id,
+            desc: slide.desc_id,
+            background: slide.bg_image,
+        }));
 
         if (!content) throw new Error("Home Page Content not found");
 
         return {
             id: home.id,
 
-            hero: {
-                title: content.hero_title,
-                desc: content.hero_desc,
-                background: home.hero_bg,
-            },
+            hero: heroSlides,
 
             about: {
                 title: content.about_us_title,
@@ -39,16 +102,39 @@ export class ClientAllService {
             services: {
                 title: content.services_title,
                 desc: content.services_desc,
+                serviceItems: serviceItems.map((item) => ({
+                    id: item.id,
+                    title: lang === "en" ? item.serviceEn?.title : item.serviceId?.title,
+                    desc: lang === "en" ? item.serviceEn?.desc : item.serviceId?.desc,
+                    image: item.bg_image
+                }))
             },
 
             news: {
                 title: content.news_title,
                 desc: content.news_desc,
+                newsItems: newsItems.map((item) => ({
+                    id: item.id,
+                    title: lang === "en" ? item.newsNewsEn?.title : item.newsNewsId?.title,
+                    desc: lang === "en" ? item.newsNewsEn?.description : item.newsNewsId?.description,
+                    publishedAt: item.publishedAt,
+                    image: item.image
+                }))
             },
 
             partners: {
                 title: content.partners_title,
                 desc: content.partners_desc,
+                partnersFunding: partnersFunding.map((item)  => ({
+                    id: item.id,
+                    name: item.name,
+                    image: item.logo_image
+                })),
+                partnersInsurance: partnersInsurance.map((item)  => ({
+                    id: item.id,
+                    name: item.name,
+                    image: item.logo_image
+                }))
             },
 
             contact: {
@@ -195,6 +281,7 @@ export class ClientAllService {
             return {
                 id: svc.id,
                 image: svc.bg_image,
+                order: svc.order,
                 title: svcContent?.title,
                 desc: svcContent?.desc,
                 location: svcContent?.location,
@@ -386,4 +473,60 @@ export class ClientAllService {
             publishedAt: news.publishedAt,
         };
     }
+
+    static async getInvestorRelationPage(lang: string) {
+        const investorRelationPage = await db.investorPage.findFirst({
+            where: { isActive: true },
+            include: {
+                inverstorPageEn: true,
+                inverstorPageId: true,
+            },
+        });
+
+        if (!investorRelationPage) throw new Error("Investor Relation Page not found");
+
+        const content = lang === "en" ? investorRelationPage.inverstorPageEn : investorRelationPage.inverstorPageId;
+        if (!content) throw new Error("Investor Relation Page Content not found");
+
+        const reports = await db.report.findMany({
+            where: {
+                is_publish: true,
+            },
+            orderBy: {
+                publish_at: "desc",
+            },
+            include: {
+                reportCategory:true,
+            },
+        });
+
+        return {
+            id: investorRelationPage.id,
+            hero: {
+                title: content.hero_title,
+                desc: content.hero_desc,
+                background: investorRelationPage.hero_bg,
+            },
+
+            stakeholders: {
+                title: content.stakeholders_title,
+                desc: content.stakeholders_desc,
+            },
+
+            report: {
+                title: content.report_title,
+                desc: content.report_desc,
+                reportItems: reports.map((report) => ({
+                    id: report.id,
+                    title: lang === "en" ? report.title_en : report.title_id,
+                    description: lang === "en" ? report.description_en : report.description_id,
+                    file_url: report.file_url,
+                    published_at: report.publish_at,
+                    category: report.reportCategory.name,
+                })),
+            },
+        };
+    }
+
+    
 }

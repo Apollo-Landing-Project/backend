@@ -25,3 +25,17 @@ export const responseSuccess = (
 		data,
 	});
 };
+
+export const responseSuccessWithMetadata = (
+	res: Response,
+	code: number,
+	message: string,
+	data?: any,
+	metadata?:any
+) => {
+	res.status(code).json({
+		status: "success",
+		message,
+		data,
+	});
+};

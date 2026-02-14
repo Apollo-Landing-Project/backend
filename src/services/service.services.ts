@@ -55,6 +55,7 @@ export class ServiceItemService {
 					create: {
 						title: data.title,
 						desc: data.desc,
+						badge: data.badge,
 						location: data.location,
 						quote: data.quote,
 						contact: data.contact,
@@ -65,6 +66,7 @@ export class ServiceItemService {
 					create: {
 						title: data.title_en,
 						desc: data.desc_en,
+						badge: data.badge_en,
 						location: data.location_en,
 						quote: data.quote_en,
 						contact: data.contact,
@@ -96,6 +98,7 @@ export class ServiceItemService {
 					update: {
 						title: data.title,
 						desc: data.desc,
+						badge: data.badge,
 						location: data.location,
 						quote: data.quote,
 						contact: data.contact,
@@ -106,6 +109,7 @@ export class ServiceItemService {
 					update: {
 						title: data.title_en,
 						desc: data.desc_en,
+						badge: data.badge_en,
 						location: data.location_en,
 						quote: data.quote_en,
 						contact: data.contact,

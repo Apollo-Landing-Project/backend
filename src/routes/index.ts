@@ -14,6 +14,7 @@ import { newsNewsRoutes } from "./newsNews.routes";
 import { newsCSRRoutes } from "./newsCSR.routes";
 import { partnerRoutes } from "./partner.routes";
 import { investorPageRoutes } from "./investorPage.routes";
+import { sharesRoutes } from "./shares.routes";
 
 import { reportCategoryRoutes } from "./reportCategory.routes";
 import { reportRoutes } from "./report.routes";
@@ -39,6 +40,7 @@ router.use("/news-news", newsNewsRoutes);
 router.use("/news-csr", newsCSRRoutes);
 router.use(carGalleryRoutes);
 router.use(partnerRoutes);
+router.use(sharesRoutes);
 router.use(reportCategoryRoutes);
 router.use(reportRoutes);
 router.use(translateRoutes);

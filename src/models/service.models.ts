@@ -24,6 +24,7 @@ export const serviceItemSchema = z.object({
 	// ID
 	title: z.string().min(1, "Title is required"),
 	desc: z.string().min(1, "Description is required"),
+	badge: z.string().optional(),
 
 	// Quote biasanya opsional, jadi kita izinkan string kosong atau undefined
 	quote: z.string().or(z.literal("")),
@@ -40,6 +41,7 @@ export const serviceItemSchema = z.object({
 	// EN
 	title_en: z.string().min(1, "Title (EN) is required"),
 	desc_en: z.string().min(1, "Description (EN) is required"),
+	badge_en: z.string().optional(),
 	quote_en: z.string().or(z.literal("")),
 	location_en: z.string().min(1, "Location (EN) is required"),
 

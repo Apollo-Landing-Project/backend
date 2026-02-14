@@ -35,50 +35,64 @@ export const aboutPageSchema = z.object({
 	// --- INDONESIA (ID) ---
 	hero_title: z.string().min(1),
 	hero_desc: z.string().min(1),
+	hero_badge: z.string().optional(),
 
 	vision_title: z.string().min(1),
 	vision_desc: z.string().min(1),
+	vision_badge: z.string().optional(),
 	vision_quote: z.string().min(1),
 	vision_list: z.preprocess(jsonParse, z.array(z.string()).min(1)),
 
 	mission_title: z.string().min(1),
 	mission_desc: z.string().min(1),
+	mission_badge: z.string().optional(),
 	mission_quote: z.string().min(1),
 	mission_list: z.preprocess(jsonParse, z.array(z.string()).min(1)),
 
 	history_title: z.string().min(1),
 	history_desc: z.string().min(1),
+	history_badge: z.string().optional(),
 
 	company_structure_title: z.string().min(1),
 	company_structure_desc: z.string().min(1),
+	company_structure_badge: z.string().optional(),
 	boc_title: z.string().min(1),
 	boc_desc: z.string().min(1),
+	boc_badge: z.string().optional(),
 	bod_title: z.string().min(1),
 	bod_desc: z.string().min(1),
+	bod_badge: z.string().optional(),
 
 	// --- ENGLISH (EN) ---
 	hero_title_en: z.string().min(1),
 	hero_desc_en: z.string().min(1),
+	hero_badge_en: z.string().optional(),
 
 	vision_title_en: z.string().min(1),
 	vision_desc_en: z.string().min(1),
+	vision_badge_en: z.string().optional(),
 	vision_quote_en: z.string().min(1),
 	vision_list_en: z.preprocess(jsonParse, z.array(z.string()).min(1)),
 
 	mission_title_en: z.string().min(1),
 	mission_desc_en: z.string().min(1),
+	mission_badge_en: z.string().optional(),
 	mission_quote_en: z.string().min(1),
 	mission_list_en: z.preprocess(jsonParse, z.array(z.string()).min(1)),
 
 	history_title_en: z.string().min(1),
 	history_desc_en: z.string().min(1),
+	history_badge_en: z.string().optional(),
 
 	company_structure_title_en: z.string().min(1),
 	company_structure_desc_en: z.string().min(1),
+	company_structure_badge_en: z.string().optional(),
 	boc_title_en: z.string().min(1),
 	boc_desc_en: z.string().min(1),
+	boc_badge_en: z.string().optional(),
 	bod_title_en: z.string().min(1),
 	bod_desc_en: z.string().min(1),
+	bod_badge_en: z.string().optional(),
 
 	// --- LISTS ---
 	governance_list: z.preprocess(

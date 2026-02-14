@@ -50,6 +50,7 @@ export class NewsCSRServices {
                         title: data.title,
                         description: data.description ?? null,
                         content: data.content,
+                        badge: data.badge ?? null,
                     },
                 },
                 newsCSREn: {
@@ -57,6 +58,7 @@ export class NewsCSRServices {
                         title: data.title_en,
                         description: data.description_en ?? null,
                         content: data.content_en,
+                        badge: data.badge_en ?? null,
                     },
                 },
                 newsCSRImage: {
@@ -144,15 +146,17 @@ export class NewsCSRServices {
         }
 
         // Build update payloads, only including defined fields
-        const idUpdate: Record<string, string> = {};
+        const idUpdate: Record<string, string | null> = {};
         if (data.title !== undefined) idUpdate.title = data.title;
         if (data.description !== undefined) idUpdate.description = data.description;
         if (data.content !== undefined) idUpdate.content = data.content;
+        if (data.badge !== undefined) idUpdate.badge = data.badge ?? null;
 
-        const enUpdate: Record<string, string> = {};
+        const enUpdate: Record<string, string | null> = {};
         if (data.title_en !== undefined) enUpdate.title = data.title_en;
         if (data.description_en !== undefined) enUpdate.description = data.description_en;
         if (data.content_en !== undefined) enUpdate.content = data.content_en;
+        if (data.badge_en !== undefined) enUpdate.badge = data.badge_en ?? null;
 
         return await db.newsCSR.update({
             where: { id },

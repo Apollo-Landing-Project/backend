@@ -35,7 +35,7 @@ model HomePage {
   isActive Boolean @default(false)
 
   // hero section
-  hero_bg String[]
+  heroSlides HeroSlide[]
 
   // about us section
   about_us_years_exp Int?
@@ -60,23 +60,25 @@ model HomePage {
 model HomePageId {
   id String @id @default(uuid())
 
-  // hero section
-  hero_title String?
-  hero_desc  String?
+  // (hero title/desc moved to HeroSlide model)
 
   // about us section
+  about_us_badge String?
   about_us_title String?
   about_us_desc  String?
 
   // services section
+  services_badge String?
   services_title String?
   services_desc  String?
 
   // news section
+  news_badge String?
   news_title String?
   news_desc  String?
 
   // partners section
+  partners_badge String?
   partners_title String?
   partners_desc  String?
 
@@ -95,23 +97,25 @@ model HomePageId {
 model HomePageEn {
   id String @id @default(uuid())
 
-  // hero section
-  hero_title String?
-  hero_desc  String?
+  // (hero title/desc moved to HeroSlide model)
 
   // about us section
+  about_us_badge String?
   about_us_title String?
   about_us_desc  String?
 
   // services section
+  services_badge String?
   services_title String?
   services_desc  String?
 
   // news section
+  news_badge String?
   news_title String?
   news_desc  String?
 
   // partners section
+  partners_badge String?
   partners_title String?
   partners_desc  String?
 
@@ -122,6 +126,22 @@ model HomePageEn {
   // 1–1 relation
   homePage   HomePage @relation(fields: [homePageId], references: [id])
   homePageId String   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HeroSlide {
+  id       String  @id @default(uuid())
+  order    Int     @default(0)
+  bg_image String?
+  title_id String?
+  desc_id  String?
+  title_en String?
+  desc_en  String?
+
+  homePage   HomePage @relation(fields: [homePageId], references: [id], onDelete: Cascade)
+  homePageId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -153,27 +173,35 @@ model AboutUsPage {
 model AboutUsPageId {
   id String @id @default(uuid())
 
+  hero_badge String?
   hero_title String?
   hero_desc  String?
 
+  vision_badge String?
   vision_title String?
   vision_desc  String?
   vision_quote String?
   vision_list  String[]
 
+  mission_badge String?
   mission_title String?
   mission_desc  String?
   mission_quote String?
   mission_list  String[]
 
+  history_badge String?
   history_title String?
   history_desc  String?
 
+  company_structure_badge String?
   company_structure_title String?
   company_structure_desc  String?
 
+  boc_badge String?
   boc_title String?
   boc_desc  String?
+
+  bod_badge String?
   bod_title String?
   bod_desc  String?
 
@@ -187,27 +215,35 @@ model AboutUsPageId {
 model AboutUsPageEn {
   id String @id @default(uuid())
 
+  hero_badge String?
   hero_title String?
   hero_desc  String?
 
+  vision_badge String?
   vision_title String?
   vision_desc  String?
   vision_quote String?
   vision_list  String[]
 
+  mission_badge String?
   mission_title String?
   mission_desc  String?
   mission_quote String?
   mission_list  String[]
 
+  history_badge String?
   history_title String?
   history_desc  String?
 
+  company_structure_badge String?
   company_structure_title String?
   company_structure_desc  String?
 
+  boc_badge String?
   boc_title String?
   boc_desc  String?
+
+  bod_badge String?
   bod_title String?
   bod_desc  String?
 
@@ -265,12 +301,15 @@ model NewsPage {
 model NewsPageEn {
   id         String  @id @default(uuid())
   // hero section
+  hero_badge String?
   hero_title String?
   hero_desc  String?
   // news section
+  news_badge String?
   news_title String?
   news_desc  String?
   // csr section
+  csr_badge  String?
   csr_title  String?
   csr_desc   String?
 
@@ -284,12 +323,15 @@ model NewsPageEn {
 model NewsPageId {
   id         String  @id @default(uuid())
   // hero section
+  hero_badge String?
   hero_title String?
   hero_desc  String?
   // news section
+  news_badge String?
   news_title String?
   news_desc  String?
   // csr section
+  csr_badge  String?
   csr_title  String?
   csr_desc   String?
 
@@ -316,10 +358,12 @@ model ServicePageId {
   id String @id @default(uuid())
 
   // Hero Section
+  hero_badge String?
   hero_title String?
   hero_desc  String?
 
   // Titles for Sections
+  used_car_gallery_badge String?
   used_car_gallery_title String?
   used_car_gallery_desc  String?
 
@@ -331,10 +375,12 @@ model ServicePageEn {
   id String @id @default(uuid())
 
   // Hero Section
+  hero_badge String?
   hero_title String?
   hero_desc  String?
 
   // Titles for Sections
+  used_car_gallery_badge String?
   used_car_gallery_title String?
   used_car_gallery_desc  String?
 
@@ -359,6 +405,7 @@ model Service {
 
 model ServiceId {
   id       String   @id @default(uuid())
+  badge    String?
   title    String?
   desc     String?
   location String?
@@ -372,6 +419,7 @@ model ServiceId {
 
 model ServiceEn {
   id       String   @id @default(uuid())
+  badge    String?
   title    String?
   desc     String?
   location String?
@@ -526,10 +574,15 @@ model InvestorPage {
 model InvestorPageId {
   id String @id @default(uuid())
 
+  hero_badge         String?
   hero_title         String?
   hero_desc          String
-  shareholders_title String?
-  shareholders_desc  String?
+  stakeholders_badge String?
+  stakeholders_title String?
+  stakeholders_desc  String?
+  report_badge       String?
+  report_title       String?
+  report_desc        String?
 
   investorPage   InvestorPage @relation(fields: [investorPageId], references: [id], onDelete: Cascade)
   investorPageId String       @unique
@@ -541,10 +594,15 @@ model InvestorPageId {
 model InvestorPageEn {
   id String @id @default(uuid())
 
+  hero_badge         String?
   hero_title         String?
   hero_desc          String
-  shareholders_title String?
-  shareholders_desc  String?
+  stakeholders_badge String?
+  stakeholders_title String?
+  stakeholders_desc  String?
+  report_badge       String?
+  report_title       String?
+  report_desc        String?
 
   investorPage   InvestorPage @relation(fields: [investorPageId], references: [id], onDelete: Cascade)
   investorPageId String       @unique
@@ -585,4 +643,16 @@ model ReportCategory {
   name        String   @unique
   description String?
   reports     Report[]
+}
+
+model Metadata {
+  id             String  @id @default(uuid())
+  destination    String  @unique
+  title_id       String?
+  title_en       String?
+  description_id String?
+  description_en String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

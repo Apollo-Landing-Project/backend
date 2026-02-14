@@ -15,13 +15,17 @@ export const servicePageSchema = z.object({
 	// ID
 	hero_title: z.string().min(1),
 	hero_desc: z.string().min(1),
+	hero_badge: z.string().optional(),
 	used_car_gallery_title: z.string().min(1),
 	used_car_gallery_desc: z.string().min(1),
+	used_car_gallery_badge: z.string().optional(),
 	// EN
 	hero_title_en: z.string().min(1),
 	hero_desc_en: z.string().min(1),
+	hero_badge_en: z.string().optional(),
 	used_car_gallery_title_en: z.string().min(1),
 	used_car_gallery_desc_en: z.string().min(1),
+	used_car_gallery_badge_en: z.string().optional(),
 });
 
 export type ServicePageInput = z.infer<typeof servicePageSchema>;

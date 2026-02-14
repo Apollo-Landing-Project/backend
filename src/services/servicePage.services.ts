@@ -52,16 +52,20 @@ export class ServicePageService {
 					create: {
 						hero_title: data.hero_title,
 						hero_desc: data.hero_desc,
+						hero_badge: data.hero_badge ?? null,
 						used_car_gallery_title: data.used_car_gallery_title,
 						used_car_gallery_desc: data.used_car_gallery_desc,
+						used_car_gallery_badge: data.used_car_gallery_badge ?? null,
 					},
 				},
 				servicePageEn: {
 					create: {
 						hero_title: data.hero_title_en,
 						hero_desc: data.hero_desc_en,
+						hero_badge: data.hero_badge_en ?? null,
 						used_car_gallery_title: data.used_car_gallery_title_en,
 						used_car_gallery_desc: data.used_car_gallery_desc_en,
+						used_car_gallery_badge: data.used_car_gallery_badge_en ?? null,
 					},
 				},
 			},
@@ -91,16 +95,20 @@ export class ServicePageService {
 					update: {
 						hero_title: data.hero_title,
 						hero_desc: data.hero_desc,
+						hero_badge: data.hero_badge ?? null,
 						used_car_gallery_title: data.used_car_gallery_title,
 						used_car_gallery_desc: data.used_car_gallery_desc,
+						used_car_gallery_badge: data.used_car_gallery_badge ?? null,
 					},
 				},
 				servicePageEn: {
 					update: {
 						hero_title: data.hero_title_en,
 						hero_desc: data.hero_desc_en,
+						hero_badge: data.hero_badge_en ?? null,
 						used_car_gallery_title: data.used_car_gallery_title_en,
 						used_car_gallery_desc: data.used_car_gallery_desc_en,
+						used_car_gallery_badge: data.used_car_gallery_badge_en ?? null,
 					},
 				},
 			},

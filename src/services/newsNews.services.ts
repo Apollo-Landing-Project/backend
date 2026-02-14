@@ -34,7 +34,7 @@ export class NewsNewsServices {
         return await db.newsNews.create({
             data: {
                 image,
-                author: data.author,
+                author: data.author?? null,
                 author_image,
                 isPublished: data.isPublished ?? false,
                 newsNewsId: {
@@ -42,6 +42,7 @@ export class NewsNewsServices {
                         title: data.title,
                         description: data.description ?? null,
                         content: data.content,
+                        badge: data.badge ?? null,
                     },
                 },
                 newsNewsEn: {
@@ -49,6 +50,7 @@ export class NewsNewsServices {
                         title: data.title_en,
                         description: data.description_en ?? null,
                         content: data.content_en,
+                        badge: data.badge_en ?? null,
                     },
                 },
             },
@@ -111,21 +113,23 @@ export class NewsNewsServices {
             where: { id },
             data: {
                 image: newImage,
-                author: data.author,
+                author: data.author ?? null,
                 author_image: newAuthorImage,
-                isPublished: data.isPublished,
+                isPublished: data.isPublished ?? false,
                 newsNewsId: {
                     update: {
-                        title: data.title,
+                        title: data.title ?? null,
                         description: data.description ?? null,
-                        content: data.content,
+                        content: data.content ?? null,
+                        badge: data.badge ?? null,
                     },
                 },
                 newsNewsEn: {
                     update: {
-                        title: data.title_en,
+                        title: data.title_en ?? null,
                         description: data.description_en ?? null,
-                        content: data.content_en,
+                        content: data.content_en ?? null,
+                        badge: data.badge_en ?? null,
                     },
                 },
             },
