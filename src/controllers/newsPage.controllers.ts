@@ -8,6 +8,7 @@ import {
 	newsPageUpdateSchema,
 	type NewsPageUpdateInput,
 } from "../models/newsPage.models";
+import { RevalidatedServices } from "../services/revalidated.services";
 
 export class NewsPageControllers {
 	static async getAll(req: Request, res: Response) {
@@ -46,6 +47,7 @@ export class NewsPageControllers {
 				validatedBody,
 				fileTypeDeclare,
 			);
+			await RevalidatedServices.revalidated("news")
 
 			responseSuccess(res, 201, "Create news page success", response);
 		} catch (e) {
@@ -76,6 +78,7 @@ export class NewsPageControllers {
 				validatedBody,
 				fileTypeDeclare,
 			);
+			await RevalidatedServices.revalidated("news")
 
 			responseSuccess(res, 200, "Update news page success", response);
 		} catch (e) {
@@ -89,6 +92,8 @@ export class NewsPageControllers {
 			if (!id) throw new Error("ID is required");
 
 			const response = await NewsPageServices.toggleActive(id);
+			await RevalidatedServices.revalidated("news")
+
 			responseSuccess(res, 200, "News page activated successfully", response);
 		} catch (e) {
 			customCatch(e, res);
@@ -101,21 +106,12 @@ export class NewsPageControllers {
 			if (!id) throw new Error("ID is required");
 
 			const response = await NewsPageServices.delete(id);
+			await RevalidatedServices.revalidated("news")
+
 			responseSuccess(res, 200, "News page deleted successfully", response);
 		} catch (e) {
 			customCatch(e, res);
 		}
 	}
 
-	static async getClient(req: Request, res: Response) {
-		try {
-			const { lang } = req.query as { lang?: string };
-			if (!lang) throw new Error("Language is required");
-
-			const response = await HomePageServices.getClient(lang);
-			responseSuccess(res, 200, "Home page retrieved successfully", response);
-		} catch (e) {
-			customCatch(e, res);
-		}
-	}
 }

@@ -8,6 +8,7 @@ import {
 	type HomePageCreateInput,
 	type HomePageUpdateInput,
 } from "../models/homePage.models";
+import { RevalidatedServices } from "../services/revalidated.services";
 
 export class HomePageControllers {
 	static async getAll(req: Request, res: Response) {
@@ -44,6 +45,7 @@ export class HomePageControllers {
 			const validatedBody = homePageCreateSchema.parse(body);
 
 			const response = await HomePageServices.create(validatedBody, fileList);
+			await RevalidatedServices.revalidated("home");
 
 			responseSuccess(res, 201, "Create home page success", response);
 		} catch (e) {
@@ -80,6 +82,7 @@ export class HomePageControllers {
 				validatedBody,
 				fileList,
 			);
+			await RevalidatedServices.revalidated("home");
 
 			responseSuccess(res, 200, "Update home page success", response);
 		} catch (e) {
@@ -93,6 +96,8 @@ export class HomePageControllers {
 			if (!id) throw new Error("ID is required");
 
 			const response = await HomePageServices.toggleActive(id);
+			await RevalidatedServices.revalidated("home");
+			
 			responseSuccess(res, 200, "Home page activated successfully", response);
 		} catch (e) {
 			customCatch(e, res);
@@ -105,6 +110,8 @@ export class HomePageControllers {
 			if (!id) throw new Error("ID is required");
 
 			const response = await HomePageServices.delete(id);
+			await RevalidatedServices.revalidated("home");
+
 			responseSuccess(res, 200, "Home page deleted successfully", response);
 		} catch (e) {
 			customCatch(e, res);

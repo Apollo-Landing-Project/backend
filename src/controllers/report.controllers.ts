@@ -6,6 +6,7 @@ import {
     reportCreateSchema,
     reportUpdateSchema,
 } from "../models/report.models";
+import { RevalidatedServices } from "../services/revalidated.services";
 
 export class ReportControllers {
     static async getAll(req: Request, res: Response) {
@@ -48,6 +49,7 @@ export class ReportControllers {
                 newsImage,
                 newsAuthorImage,
             );
+            await RevalidatedServices.revalidated("investor_relation")
             responseSuccess(res, 201, "Create report success", response);
         } catch (e) {
             customCatch(e, res);
@@ -80,6 +82,8 @@ export class ReportControllers {
                 newsImage,
                 newsAuthorImage,
             );
+            await RevalidatedServices.revalidated("investor_relation")
+
             responseSuccess(res, 200, "Update report success", response);
         } catch (e) {
             customCatch(e, res);
@@ -92,6 +96,7 @@ export class ReportControllers {
             if (!id) throw new Error("ID is required");
 
             const response = await ReportServices.delete(id);
+            await RevalidatedServices.revalidated("investor_relation")
             responseSuccess(res, 200, "Delete report success", response);
         } catch (e) {
             customCatch(e, res);

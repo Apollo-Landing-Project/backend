@@ -7,4 +7,6 @@ export const envConfig = {
 	db_url: process.env.DATABASE_URL!,
 	cookie_domain: process.env.COOKIE_DOMAIN!,
 	jwt_secret: process.env.JWT_SECRET!,
+	landing_url: process.env.LANDING_URL!,
+	secret_revalidated: process.env.SECRET_VALIDATED!,
 };

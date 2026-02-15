@@ -6,6 +6,7 @@ import {
 	aboutPageSchema,
 	type AboutPageInput,
 } from "../models/aboutUsPage.models";
+import { RevalidatedServices } from "../services/revalidated.services";
 
 export class AboutUsPageControllers {
 	static async getAll(req: Request, res: Response) {
@@ -22,6 +23,7 @@ export class AboutUsPageControllers {
 			const { id } = req.params;
 			if (!id) throw new Error("ID is required");
 			const response = await AboutUsPageServices.getById(id);
+
 			responseSuccess(res, 200, "Get success", response);
 		} catch (e) {
 			customCatch(e, res);
@@ -44,6 +46,7 @@ export class AboutUsPageControllers {
 				validatedBody,
 				uploadedFiles,
 			);
+			await RevalidatedServices.revalidated("about")
 
 			responseSuccess(res, 201, "Create success", response);
 		} catch (e) {
@@ -71,6 +74,7 @@ export class AboutUsPageControllers {
 				validatedBody,
 				uploadedFiles,
 			);
+			await RevalidatedServices.revalidated("about")
 
 			responseSuccess(res, 200, "Update success", response);
 		} catch (e) {
@@ -83,6 +87,8 @@ export class AboutUsPageControllers {
 			const { id } = req.params;
 			if (!id) throw new Error("ID is required");
 			const response = await AboutUsPageServices.toggleActive(id);
+			await RevalidatedServices.revalidated("about")
+
 			responseSuccess(res, 200, "Activated successfully", response);
 		} catch (e) {
 			customCatch(e, res);
@@ -94,6 +100,8 @@ export class AboutUsPageControllers {
 			const { id } = req.params;
 			if (!id) throw new Error("ID is required");
 			const response = await AboutUsPageServices.delete(id);
+			await RevalidatedServices.revalidated("about")
+
 			responseSuccess(res, 200, "Deleted successfully", response);
 		} catch (e) {
 			customCatch(e, res);

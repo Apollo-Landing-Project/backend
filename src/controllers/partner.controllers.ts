@@ -3,6 +3,7 @@ import { responseSuccess } from "../utils/response";
 import { customCatch } from "../utils/customCatch";
 import { PartnerService } from "../services/partner.services";
 import { partnerSchema } from "../models/partner.models";
+import { RevalidatedServices } from "../services/revalidated.services";
 
 export class PartnerController {
     static async getAll(req: Request, res: Response) {
@@ -29,6 +30,8 @@ export class PartnerController {
         try {
             const body = partnerSchema.parse(req.body);
             const data = await PartnerService.create(body, req.file);
+            await RevalidatedServices.revalidated("home")
+
             responseSuccess(res, 201, "Partner added successfully", data);
         } catch (e) {
             customCatch(e, res);
@@ -41,6 +44,8 @@ export class PartnerController {
             const { id } = req.params;
             if (!id) throw new Error("Id is required");
             const data = await PartnerService.update(id as string, body, req.file);
+            await RevalidatedServices.revalidated("home")
+
             responseSuccess(res, 200, "Partner updated successfully", data);
         } catch (e) {
             customCatch(e, res);
@@ -52,6 +57,8 @@ export class PartnerController {
             const { id } = req.params;
             if (!id) throw new Error("Id is required");
             await PartnerService.delete(id as string);
+            await RevalidatedServices.revalidated("home")
+            
             responseSuccess(res, 200, "Partner deleted successfully");
         } catch (e) {
             customCatch(e, res);

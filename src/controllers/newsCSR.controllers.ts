@@ -6,6 +6,7 @@ import {
     newsCSRCreateSchema,
     newsCSRUpdateSchema,
 } from "../models/newsCSR.models";
+import { RevalidatedServices } from "../services/revalidated.services";
 
 export class NewsCSRControllers {
     static async getAll(req: Request, res: Response) {
@@ -44,6 +45,9 @@ export class NewsCSRControllers {
                 imageFiles,
                 authorImageFile,
             );
+            
+            await RevalidatedServices.revalidated("news")
+            await RevalidatedServices.revalidated("home")
 
             responseSuccess(res, 201, "CSR news created successfully", data);
         } catch (e) {
@@ -70,6 +74,9 @@ export class NewsCSRControllers {
                 newImageFiles,
                 authorImageFile,
             );
+            
+            await RevalidatedServices.revalidated("news")
+            await RevalidatedServices.revalidated("home")
 
             responseSuccess(res, 200, "CSR news updated successfully", data);
         } catch (e) {
@@ -83,6 +90,10 @@ export class NewsCSRControllers {
             if (!id) throw new Error("ID is required");
 
             await NewsCSRServices.delete(id);
+            
+            await RevalidatedServices.revalidated("news")
+            await RevalidatedServices.revalidated("home")
+
             responseSuccess(res, 200, "CSR news deleted successfully");
         } catch (e) {
             customCatch(e, res);
@@ -95,6 +106,10 @@ export class NewsCSRControllers {
             if (!id) throw new Error("ID is required");
 
             const data = await NewsCSRServices.togglePublish(id);
+
+            await RevalidatedServices.revalidated("news")
+            await RevalidatedServices.revalidated("home")
+
             responseSuccess(res, 200, "CSR news publish status toggled", data);
         } catch (e) {
             customCatch(e, res);

@@ -6,6 +6,7 @@ import {
     newsNewsCreateSchema,
     newsNewsUpdateSchema,
 } from "../models/newsNews.models";
+import { RevalidatedServices } from "../services/revalidated.services";
 
 export class NewsNewsControllers {
     static async getAll(req: Request, res: Response) {
@@ -44,6 +45,8 @@ export class NewsNewsControllers {
                 imageFile,
                 authorImageFile,
             );
+            await RevalidatedServices.revalidated("news")
+            await RevalidatedServices.revalidated("home")
 
             responseSuccess(res, 201, "News created successfully", data);
         } catch (e) {
@@ -74,6 +77,9 @@ export class NewsNewsControllers {
                 imageFile,
                 authorImageFile,
             );
+            
+            await RevalidatedServices.revalidated("news")
+            await RevalidatedServices.revalidated("home")
 
             responseSuccess(res, 200, "News updated successfully", data);
         } catch (e) {
@@ -87,6 +93,10 @@ export class NewsNewsControllers {
             if (!id) throw new Error("ID is required");
 
             await NewsNewsServices.delete(id as string);
+            
+            await RevalidatedServices.revalidated("news")
+            await RevalidatedServices.revalidated("home")
+
             responseSuccess(res, 200, "News deleted successfully");
         } catch (e) {
             customCatch(e, res);
@@ -99,6 +109,10 @@ export class NewsNewsControllers {
             if (!id) throw new Error("ID is required");
 
             const data = await NewsNewsServices.togglePublish(id as string);
+            
+            await RevalidatedServices.revalidated("news")
+            await RevalidatedServices.revalidated("home")
+            
             responseSuccess(res, 200, "News publish status toggled", data);
         } catch (e) {
             customCatch(e, res);
@@ -111,6 +125,10 @@ export class NewsNewsControllers {
             if (!file) throw new Error("Image file is required");
 
             const data = await NewsNewsServices.uploadContentImage(file);
+            
+            await RevalidatedServices.revalidated("news")
+            await RevalidatedServices.revalidated("home")
+            
             responseSuccess(res, 201, "Content image uploaded", data);
         } catch (e) {
             customCatch(e, res);

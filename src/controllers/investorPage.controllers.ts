@@ -7,6 +7,7 @@ import {
     investorPageUpdateSchema,
     type InvestorPageUpdateInput,
 } from "../models/investorPage.models";
+import { RevalidatedServices } from "../services/revalidated.services";
 
 export class InvestorPageControllers {
     static async getAll(req: Request, res: Response) {
@@ -45,6 +46,7 @@ export class InvestorPageControllers {
                 validatedBody,
                 fileTypeDeclare,
             );
+            await RevalidatedServices.revalidated("investor_relation")
 
             responseSuccess(res, 201, "Create investor page success", response);
         } catch (e) {
@@ -75,6 +77,7 @@ export class InvestorPageControllers {
                 validatedBody,
                 fileTypeDeclare,
             );
+            await RevalidatedServices.revalidated("investor_relation")
 
             responseSuccess(res, 200, "Update investor page success", response);
         } catch (e) {
@@ -88,6 +91,7 @@ export class InvestorPageControllers {
             if (!id) throw new Error("ID is required");
 
             const response = await InvestorPageServices.toggleActive(id);
+            await RevalidatedServices.revalidated("investor_relation")
             responseSuccess(res, 200, "Investor page activated successfully", response);
         } catch (e) {
             customCatch(e, res);
@@ -100,6 +104,7 @@ export class InvestorPageControllers {
             if (!id) throw new Error("ID is required");
 
             const response = await InvestorPageServices.delete(id);
+            await RevalidatedServices.revalidated("investor_relation")
             responseSuccess(res, 200, "Investor page deleted successfully", response);
         } catch (e) {
             customCatch(e, res);

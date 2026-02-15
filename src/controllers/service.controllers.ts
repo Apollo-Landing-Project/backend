@@ -3,6 +3,7 @@ import { responseSuccess } from "../utils/response";
 import { customCatch } from "../utils/customCatch";
 import { ServiceItemService } from "../services/service.services";
 import { serviceItemSchema } from "../models/service.models";
+import { RevalidatedServices } from "../services/revalidated.services";
 
 export class ServiceItemController {
 	static async getAll(req: Request, res: Response) {
@@ -30,6 +31,9 @@ export class ServiceItemController {
 		try {
 			const body = serviceItemSchema.parse(req.body);
 			const data = await ServiceItemService.create(body, req.file);
+			await RevalidatedServices.revalidated("services")
+			await RevalidatedServices.revalidated("home")
+
 			responseSuccess(res, 201, "Service Created", data);
 		} catch (e) {
 			customCatch(e, res);
@@ -46,6 +50,9 @@ export class ServiceItemController {
 				body,
 				req.file,
 			);
+			await RevalidatedServices.revalidated("services")
+			await RevalidatedServices.revalidated("home")
+
 			responseSuccess(res, 200, "Service Updated", data);
 		} catch (e) {
 			customCatch(e, res);
@@ -57,6 +64,9 @@ export class ServiceItemController {
 			const { id } = req.params;
 			if (!id) throw new Error("ID is required");
 			await ServiceItemService.delete(id as string);
+			await RevalidatedServices.revalidated("services")
+			await RevalidatedServices.revalidated("home")
+
 			responseSuccess(res, 200, "Service Deleted");
 		} catch (e) {
 			customCatch(e, res);
@@ -68,6 +78,9 @@ export class ServiceItemController {
 			const { id } = req.params;
 			if (!id) throw new Error("ID is required");
 			await ServiceItemService.toggleActive(id as string);
+			await RevalidatedServices.revalidated("services")
+			await RevalidatedServices.revalidated("home")
+
 			responseSuccess(res, 200, "Status Toggled");
 		} catch (e) {
 			customCatch(e, res);
@@ -81,6 +94,9 @@ export class ServiceItemController {
 			if (!Array.isArray(items)) throw new Error("Invalid items format");
 
 			await ServiceItemService.updateOrder(items);
+			await RevalidatedServices.revalidated("services")
+			await RevalidatedServices.revalidated("home")
+
 			responseSuccess(res, 200, "Order Updated");
 		} catch (e) {
 			customCatch(e, res);
