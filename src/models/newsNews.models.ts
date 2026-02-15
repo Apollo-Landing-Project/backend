@@ -6,13 +6,11 @@ export const newsNewsCreateSchema = z.object({
 	title: z.string().min(1, "Title (ID) is required"),
 	description: z.string().optional(),
 	content: z.string().min(1, "Content (ID) is required"),
-	badge: z.string().optional(),
 
 	// English (EN)
 	title_en: z.string().min(1, "Title (EN) is required"),
 	description_en: z.string().optional(),
 	content_en: z.string().min(1, "Content (EN) is required"),
-	badge_en: z.string().optional(),
 
 	// Global
 	author: z.string().optional(),
@@ -29,7 +27,10 @@ export const newsNewsCreateSchema = z.object({
 // --- UPDATE SCHEMA ---
 export const newsNewsUpdateSchema = newsNewsCreateSchema.partial().extend({
 	image_status: z.enum(["keep", "change"]),
-	author_image_status: z.enum(["keep", "change", "remove"]).optional().default("keep"),
+	author_image_status: z
+		.enum(["keep", "change", "remove"])
+		.optional()
+		.default("keep"),
 });
 
 export type NewsNewsCreateInput = z.infer<typeof newsNewsCreateSchema>;

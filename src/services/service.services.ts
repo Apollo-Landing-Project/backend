@@ -53,9 +53,10 @@ export class ServiceItemService {
 				order: newOrder,
 				serviceId: {
 					create: {
+						desc_sort: data.desc_sort,
 						title: data.title,
 						desc: data.desc,
-						badge: data.badge,
+						badge: data.badge ?? null,
 						location: data.location,
 						quote: data.quote,
 						contact: data.contact,
@@ -64,9 +65,10 @@ export class ServiceItemService {
 				},
 				serviceEn: {
 					create: {
+						desc_sort: data.desc_sort_en,
 						title: data.title_en,
 						desc: data.desc_en,
-						badge: data.badge_en,
+						badge: data.badge_en ?? null,
 						location: data.location_en,
 						quote: data.quote_en,
 						contact: data.contact,
@@ -96,9 +98,10 @@ export class ServiceItemService {
 				bg_image,
 				serviceId: {
 					update: {
+						desc_sort: data.desc_sort,
 						title: data.title,
 						desc: data.desc,
-						badge: data.badge,
+						badge: data.badge ?? null,
 						location: data.location,
 						quote: data.quote,
 						contact: data.contact,
@@ -107,9 +110,10 @@ export class ServiceItemService {
 				},
 				serviceEn: {
 					update: {
+						desc_sort: data.desc_sort_en,
 						title: data.title_en,
 						desc: data.desc_en,
-						badge: data.badge_en,
+						badge: data.badge_en ?? null,
 						location: data.location_en,
 						quote: data.quote_en,
 						contact: data.contact,

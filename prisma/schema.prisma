@@ -405,28 +405,30 @@ model Service {
 }
 
 model ServiceId {
-  id       String   @id @default(uuid())
-  badge    String?
-  title    String?
-  desc     String?
-  location String?
-  contact  String[]
-  email    String[]
-  quote    String?
+  id        String   @id @default(uuid())
+  badge     String?
+  title     String?
+  desc      String?
+  desc_sort String?
+  location  String?
+  contact   String[]
+  email     String[]
+  quote     String?
 
   service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   serviceId String  @unique
 }
 
 model ServiceEn {
-  id       String   @id @default(uuid())
-  badge    String?
-  title    String?
-  desc     String?
-  location String?
-  contact  String[]
-  email    String[]
-  quote    String?
+  id        String   @id @default(uuid())
+  badge     String?
+  title     String?
+  desc      String?
+  desc_sort String?
+  location  String?
+  contact   String[]
+  email     String[]
+  quote     String?
 
   service   Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   serviceId String  @unique
