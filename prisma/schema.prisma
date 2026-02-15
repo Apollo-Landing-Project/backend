@@ -485,6 +485,8 @@ model NewsNews {
   author       String?
   author_image String?
   publishedAt  DateTime @default(now())
+  reportId     String?  @unique
+  report       Report?  @relation(fields: [reportId], references: [id])
 
   newsNewsId NewsNewsId?
   newsNewsEn NewsNewsEn?
@@ -633,6 +635,8 @@ model Report {
   file_url       String? // ini nantinya berupa pdf/word/excel
   publish_at     DateTime
   is_publish     Boolean  @default(true)
+
+  newsNews NewsNews?
 
   reportCategory   ReportCategory @relation(fields: [reportCategoryId], references: [id], onDelete: Cascade)
   reportCategoryId String

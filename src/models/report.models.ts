@@ -12,6 +12,12 @@ export const reportCreateSchema = z.object({
         .optional(), // Handle multipart boolean
     reportCategoryId: z.string().min(1, "Category is required"),
     file_status: z.enum(["keep", "change"]).optional(),
+    // News fields
+    news_author: z.string().optional(),
+    news_image: z.any().optional(), // Handle file upload or string url
+    news_author_image: z.any().optional(), // Handle file upload or string url
+    news_content_id: z.string().optional(),
+    news_content_en: z.string().optional(),
 });
 
 export const reportUpdateSchema = reportCreateSchema.partial().extend({

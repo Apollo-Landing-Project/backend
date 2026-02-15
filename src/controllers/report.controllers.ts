@@ -32,11 +32,22 @@ export class ReportControllers {
 
     static async create(req: Request, res: Response) {
         try {
-            const file = req.file as Express.Multer.File;
+            const files = req.files as {
+                [fieldname: string]: Express.Multer.File[];
+            };
+            const file = files["file_url"]?.[0];
+            const newsImage = files["news_image"]?.[0];
+            const newsAuthorImage = files["news_author_image"]?.[0];
+
             if (!file) throw new Error("File is required");
 
             const body = reportCreateSchema.parse(req.body);
-            const response = await ReportServices.create(body, file);
+            const response = await ReportServices.create(
+                body,
+                file,
+                newsImage,
+                newsAuthorImage,
+            );
             responseSuccess(res, 201, "Create report success", response);
         } catch (e) {
             customCatch(e, res);
@@ -48,7 +59,13 @@ export class ReportControllers {
             const { id } = req.params;
             if (!id) throw new Error("ID is required");
 
-            const file = req.file as Express.Multer.File;
+            const files = req.files as {
+                [fieldname: string]: Express.Multer.File[];
+            };
+            const file = files["file_url"]?.[0];
+            const newsImage = files["news_image"]?.[0];
+            const newsAuthorImage = files["news_author_image"]?.[0];
+
             const body = reportUpdateSchema.parse(req.body);
 
             // Logic check: if change requested but no file
@@ -56,7 +73,13 @@ export class ReportControllers {
                 throw new Error("File is required when status is 'change'");
             }
 
-            const response = await ReportServices.update(id, body, file);
+            const response = await ReportServices.update(
+                id,
+                body,
+                file,
+                newsImage,
+                newsAuthorImage,
+            );
             responseSuccess(res, 200, "Update report success", response);
         } catch (e) {
             customCatch(e, res);

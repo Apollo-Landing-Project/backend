@@ -8,13 +8,28 @@ import type {
 } from "../models/report.models";
 
 export class ReportServices {
-    static async create(data: ReportCreateInput, file: Express.Multer.File) {
+    static async create(
+        data: ReportCreateInput,
+        file: Express.Multer.File,
+        newsImage?: Express.Multer.File,
+        newsAuthorImage?: Express.Multer.File,
+    ) {
         let fileUrl = null;
         if (file) {
             fileUrl = `${envConfig.host_url}/storage/files/${file.filename}`;
         }
 
-        return await db.report.create({
+        let newsImageUrl = null;
+        if (newsImage) {
+            newsImageUrl = `${envConfig.host_url}/storage/files/${newsImage.filename}`;
+        }
+
+        let newsAuthorImageUrl = null;
+        if (newsAuthorImage) {
+            newsAuthorImageUrl = `${envConfig.host_url}/storage/files/${newsAuthorImage.filename}`;
+        }
+
+        const report = await db.report.create({
             data: {
                 title_id: data.title_id ?? null,
                 title_en: data.title_en ?? null,
@@ -26,6 +41,34 @@ export class ReportServices {
                 file_url: fileUrl,
             },
         });
+
+        // Create NewsNews
+        await db.newsNews.create({
+            data: {
+                isPublished: data.is_publish ?? true,
+                image: newsImageUrl,
+                author: data.news_author ?? null,
+                author_image: newsAuthorImageUrl,
+                publishedAt: data.publish_at,
+                reportId: report.id,
+                newsNewsId: {
+                    create: {
+                        title: data.title_id ?? null,
+                        description: data.description_id ?? null,
+                        content: data.news_content_id ?? null,
+                    },
+                },
+                newsNewsEn: {
+                    create: {
+                        title: data.title_en ?? null,
+                        description: data.description_en ?? null,
+                        content: data.news_content_en ?? null,
+                    },
+                },
+            },
+        });
+
+        return report;
     }
 
     static async getAll(categoryId?: string) {
@@ -56,15 +99,18 @@ export class ReportServices {
         id: string,
         data: ReportUpdateInput,
         file?: Express.Multer.File,
+        newsImage?: Express.Multer.File,
+        newsAuthorImage?: Express.Multer.File,
     ) {
-        const existing = await db.report.findUnique({ where: { id } });
+        const existing = await db.report.findUnique({
+            where: { id },
+            include: { newsNews: true },
+        });
         if (!existing) throw new Error("Report not found");
 
         let newFileUrl = existing.file_url;
-
-        // Handle file changes
+        // Handle Report file changes
         if (data.file_status === "change") {
-            // Delete old file if exists
             if (existing.file_url) {
                 const oldFilename = existing.file_url.split("/").pop();
                 if (oldFilename) {
@@ -72,16 +118,41 @@ export class ReportServices {
                     if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
                 }
             }
-
-            // Set new file if uploaded
             if (file) {
                 newFileUrl = `${envConfig.host_url}/storage/files/${file.filename}`;
             } else {
-                newFileUrl = null; // Removed
+                newFileUrl = null;
             }
         }
 
-        return await db.report.update({
+        // Handle News Files
+        let newsImageUrl = existing.newsNews?.image ?? null;
+        if (newsImage) {
+             // Delete old news image if exists
+             if (existing.newsNews?.image) {
+                const oldFilename = existing.newsNews.image.split("/").pop();
+                if (oldFilename) {
+                    const oldPath = path.join("/apollo/storage/files", oldFilename);
+                    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+                }
+            }
+            newsImageUrl = `${envConfig.host_url}/storage/files/${newsImage.filename}`;
+        }
+
+        let newsAuthorImageUrl = existing.newsNews?.author_image ?? null;
+        if (newsAuthorImage) {
+             // Delete old author image if exists
+             if (existing.newsNews?.author_image) {
+                const oldFilename = existing.newsNews.author_image.split("/").pop();
+                if (oldFilename) {
+                    const oldPath = path.join("/apollo/storage/files", oldFilename);
+                    if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+                }
+            }
+            newsAuthorImageUrl = `${envConfig.host_url}/storage/files/${newsAuthorImage.filename}`;
+        }
+
+        const report = await db.report.update({
             where: { id },
             data: {
                 title_id: data.title_id ?? undefined,
@@ -94,6 +165,62 @@ export class ReportServices {
                 file_url: newFileUrl,
             } as any,
         });
+
+        // Upsert NewsNews
+        if (existing.newsNews) {
+            await db.newsNews.update({
+                where: { id: existing.newsNews.id },
+                data: {
+                    isPublished: data.is_publish ?? undefined,
+                    image: newsImageUrl,
+                    author: data.news_author ?? undefined,
+                    author_image: newsAuthorImageUrl,
+                    publishedAt: data.publish_at ?? undefined,
+                    newsNewsId: {
+                        update: {
+                            ...(data.title_id !== undefined && { title: data.title_id }),
+                            ...(data.description_id !== undefined && { description: data.description_id }),
+                            ...(data.news_content_id !== undefined && { content: data.news_content_id }),
+                        },
+                    },
+                    newsNewsEn: {
+                        update: {
+                            ...(data.title_en !== undefined && { title: data.title_en }),
+                            ...(data.description_en !== undefined && { description: data.description_en }),
+                            ...(data.news_content_en !== undefined && { content: data.news_content_en }),
+                        },
+                    },
+                } as any,
+            });
+        } else {
+            // Create if not exists (covering edge case where report exists but news doesn't)
+             await db.newsNews.create({
+                data: {
+                    isPublished: data.is_publish ?? true,
+                    image: newsImageUrl,
+                    author: data.news_author ?? null,
+                    author_image: newsAuthorImageUrl,
+                    publishedAt: data.publish_at ?? report.publish_at,
+                    reportId: report.id,
+                    newsNewsId: {
+                        create: {
+                            title: data.title_id ?? report.title_id,
+                            description: data.description_id ?? report.description_id,
+                            content: data.news_content_id ?? null,
+                        },
+                    },
+                    newsNewsEn: {
+                        create: {
+                            title: data.title_en ?? report.title_en,
+                            description: data.description_en ?? report.description_en,
+                            content: data.news_content_en ?? null,
+                        },
+                    },
+                },
+            });
+        }
+
+        return report;
     }
 
     static async delete(id: string) {

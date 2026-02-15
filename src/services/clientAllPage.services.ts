@@ -530,6 +530,11 @@ export class ClientAllService {
 			},
 			include: {
 				reportCategory: true,
+                newsNews: {
+                    select: {
+                        id: true,
+                    }
+                }
 			},
 		});
 
@@ -554,6 +559,7 @@ export class ClientAllService {
 				desc: content.report_desc,
 				reportItems: reports.map((report) => ({
 					id: report.id,
+                    news_id: report.newsNews?.id,
 					title: lang === "en" ? report.title_en : report.title_id,
 					description:
 						lang === "en" ? report.description_en : report.description_id,
