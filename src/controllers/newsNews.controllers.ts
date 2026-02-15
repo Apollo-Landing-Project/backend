@@ -116,4 +116,6 @@ export class NewsNewsControllers {
             customCatch(e, res);
         }
     }
+
+    
 }

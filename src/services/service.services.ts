@@ -33,7 +33,7 @@ export class ServiceItemService {
 	static async getById(id: string) {
 		const data = await db.service.findUnique({
 			where: { id },
-			include: { serviceId: true, serviceEn: true },
+			include: { serviceId: true, serviceEn: true,  },
 		});
 		if (!data) throw new Error("Service not found");
 		return data;

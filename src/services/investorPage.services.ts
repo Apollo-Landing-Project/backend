@@ -47,7 +47,7 @@ export class InvestorPageServices {
         return await db.investorPage.findMany({
             orderBy: { createdAt: "desc" },
             include: {
-                inverstorPageEn:true,
+                inverstorPageEn: true,
                 inverstorPageId: true,
             },
         });

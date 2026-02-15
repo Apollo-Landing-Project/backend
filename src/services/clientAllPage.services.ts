@@ -530,13 +530,15 @@ export class ClientAllService {
 			},
 			include: {
 				reportCategory: true,
-                newsNews: {
+                news: {
                     select: {
                         id: true,
                     }
                 }
 			},
 		});
+
+		const shares = await db.shares.findMany()
 
 		return {
 			id: investorRelationPage.id,
@@ -551,6 +553,7 @@ export class ClientAllService {
 				badge: content.stakeholders_badge,
 				title: content.stakeholders_title,
 				desc: content.stakeholders_desc,
+				shares: shares
 			},
 
 			report: {
@@ -559,7 +562,7 @@ export class ClientAllService {
 				desc: content.report_desc,
 				reportItems: reports.map((report) => ({
 					id: report.id,
-                    news_id: report.newsNews?.id,
+                    news_id: report.news[0]?.id,
 					title: lang === "en" ? report.title_en : report.title_id,
 					description:
 						lang === "en" ? report.description_en : report.description_id,

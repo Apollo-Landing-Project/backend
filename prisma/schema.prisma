@@ -485,11 +485,11 @@ model NewsNews {
   author       String?
   author_image String?
   publishedAt  DateTime @default(now())
-  reportId     String?  @unique
-  report       Report?  @relation(fields: [reportId], references: [id])
+  report_id    String?
 
   newsNewsId NewsNewsId?
   newsNewsEn NewsNewsEn?
+  report     Report?     @relation(fields: [report_id], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -636,7 +636,7 @@ model Report {
   publish_at     DateTime
   is_publish     Boolean  @default(true)
 
-  newsNews NewsNews?
+  news NewsNews[]
 
   reportCategory   ReportCategory @relation(fields: [reportCategoryId], references: [id], onDelete: Cascade)
   reportCategoryId String

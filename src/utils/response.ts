@@ -4,7 +4,7 @@ export const responseError = (
 	res: Response,
 	code: number,
 	message: string,
-	error?: any,
+	error?: any
 ) => {
 	res.status(code).json({
 		status: "failed",
@@ -17,7 +17,7 @@ export const responseSuccess = (
 	res: Response,
 	code: number,
 	message: string,
-	data?: any,
+	data?: any
 ) => {
 	res.status(code).json({
 		status: "success",
@@ -31,12 +31,13 @@ export const responseSuccessWithMetadata = (
 	code: number,
 	message: string,
 	data?: any,
-	metadata?: any,
+	metadata?:any
 ) => {
 	res.status(code).json({
 		status: "success",
 		message,
 		data,
-		metadata,
+		metadata
 	});
+
 };
