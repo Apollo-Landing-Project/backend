@@ -15,7 +15,7 @@ clientAllPage.get("/service", ClientAllController.getServicePage);
 // News Page Routes
 clientAllPage.get("/news", ClientAllController.getNewsPage);
 clientAllPage.get("/news/csr/:id", ClientAllController.getNewsCSRDetail);
-clientAllPage.get("/news/:id", ClientAllController.getNewsDetail);
+clientAllPage.get("/news/article/:id", ClientAllController.getNewsDetail);
 
 // Investor Page Routes
 clientAllPage.get("/investor", ClientAllController.getInvestorRelationPage);
