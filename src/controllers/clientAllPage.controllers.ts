@@ -104,7 +104,6 @@ export class ClientAllController {
 			if (!lang) throw new Error("Language is required");
 
 			const response = await ClientAllService.getNewsDetail(id, lang);
-			responseSuccess(res, 200, "News detail retrieved successfully", response);
 
 			const date = new Date(response.publishedAt);
 			const monthsId = [
