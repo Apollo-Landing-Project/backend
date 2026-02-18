@@ -1,8 +1,8 @@
-import { db } from "../lib/prisma";
+import { db } from "../lib/prisma.js";
 import type {
     ReportCategoryCreateInput,
     ReportCategoryUpdateInput,
-} from "../models/reportCategory.models";
+} from "../models/reportCategory.models.js";
 
 export class ReportCategoryServices {
     static async create(data: ReportCategoryCreateInput) {

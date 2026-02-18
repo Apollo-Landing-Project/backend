@@ -1,14 +1,14 @@
 import type { Request, Response } from "express";
-import { customCatch } from "../utils/customCatch";
-import { responseSuccess } from "../utils/response";
-import { HomePageServices } from "../services/homePage.services";
+import { customCatch } from "../utils/customCatch.js";
+import { responseSuccess } from "../utils/response.js";
+import { HomePageServices } from "../services/homePage.services.js";
 import {
 	homePageCreateSchema,
 	homePageUpdateSchema,
 	type HomePageCreateInput,
 	type HomePageUpdateInput,
-} from "../models/homePage.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+} from "../models/homePage.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class HomePageControllers {
 	static async getAll(req: Request, res: Response) {

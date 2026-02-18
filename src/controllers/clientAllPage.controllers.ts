@@ -2,10 +2,10 @@ import type { Request, Response } from "express";
 import {
 	responseSuccess,
 	responseSuccessWithMetadata,
-} from "../utils/response";
-import { customCatch } from "../utils/customCatch";
-import { ClientAllService } from "../services/clientAllPage.services";
-import { db } from "../lib/prisma";
+} from "../utils/response.js";
+import { customCatch } from "../utils/customCatch.js";
+import { ClientAllService } from "../services/clientAllPage.services.js";
+import { db } from "../lib/prisma.js";
 
 export class ClientAllController {
 	static async getHomePage(req: Request, res: Response) {

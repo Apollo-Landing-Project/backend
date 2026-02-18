@@ -1,6 +1,6 @@
-import { envConfig } from "../config/env.config";
-import { db } from "../lib/prisma";
-import type { HomePageCreateInput } from "../models/homePage.models";
+import { envConfig } from "../config/env.config.js";
+import { db } from "../lib/prisma.js";
+import type { HomePageCreateInput } from "../models/homePage.models.js";
 import fs from "fs";
 import path from "path";
 

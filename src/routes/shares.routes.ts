@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { SharesController } from "../controllers/shares.controllers";
+import { SharesController } from "../controllers/shares.controllers.js";
 
 export const sharesRoutes = Router();
 

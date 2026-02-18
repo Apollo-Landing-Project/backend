@@ -1,11 +1,11 @@
-import { db } from "../lib/prisma";
+import { db } from "../lib/prisma.js";
 import fs from "fs";
 import path from "path";
-import { envConfig } from "../config/env.config";
+import { envConfig } from "../config/env.config.js";
 import type {
 	NewsCSRCreateInput,
 	NewsCSRUpdateInput,
-} from "../models/newsCSR.models";
+} from "../models/newsCSR.models.js";
 
 const IMAGE_DIR = "/apollo/storage/images";
 

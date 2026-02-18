@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { uploadImage } from "../config/uploadImage.config";
-import { CarGalleryController } from "../controllers/carGallery.controllers";
+import { uploadImage } from "../config/uploadImage.config.js";
+import { CarGalleryController } from "../controllers/carGallery.controllers.js";
 
 export const carGalleryRoutes = Router();
 

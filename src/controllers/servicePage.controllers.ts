@@ -1,9 +1,9 @@
-import { responseSuccess } from "../utils/response";
-import { customCatch } from "../utils/customCatch";
+import { responseSuccess } from "../utils/response.js";
+import { customCatch } from "../utils/customCatch.js";
 import type { Request, Response } from "express";
-import { ServicePageService } from "../services/servicePage.services";
-import { servicePageSchema } from "../models/servicePage.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+import { ServicePageService } from "../services/servicePage.services.js";
+import { servicePageSchema } from "../models/servicePage.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class ServicePageController {
 	static async getAll(req: Request, res: Response) {

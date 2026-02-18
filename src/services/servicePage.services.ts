@@ -1,8 +1,8 @@
-import { db } from "../lib/prisma";
+import { db } from "../lib/prisma.js";
 import fs from "fs";
 import path from "path";
 import "dotenv/config";
-import type { ServicePageInput } from "../models/servicePage.models";
+import type { ServicePageInput } from "../models/servicePage.models.js";
 
 const deleteFile = (url: string | null) => {
 	if (!url) return;

@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
-import { customCatch } from "../utils/customCatch";
-import { responseSuccess } from "../utils/response";
-import { NewsNewsServices } from "../services/newsNews.services";
+import { customCatch } from "../utils/customCatch.js";
+import { responseSuccess } from "../utils/response.js";
+import { NewsNewsServices } from "../services/newsNews.services.js";
 import {
     newsNewsCreateSchema,
     newsNewsUpdateSchema,
-} from "../models/newsNews.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+} from "../models/newsNews.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class NewsNewsControllers {
     static async getAll(req: Request, res: Response) {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ClientAllController } from "../controllers/clientAllPage.controllers";
+import { ClientAllController } from "../controllers/clientAllPage.controllers.js";
 
 export const clientAllPage = Router();
 

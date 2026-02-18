@@ -1,12 +1,12 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import { authRoutes } from "./routes/auth.routes";
+import { authRoutes } from "./routes/auth.routes.js";
 import morgan from "morgan";
 import helmet from "helmet";
 import compression from "compression";
 import { xss } from "express-xss-sanitizer";
-import { router } from "./routes";
+import { router } from "./routes/index.js";
 import cookieParser from "cookie-parser";
 
 const app = express();

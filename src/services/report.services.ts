@@ -1,11 +1,11 @@
-import { envConfig } from "../config/env.config";
-import { db } from "../lib/prisma";
+import { envConfig } from "../config/env.config.js";
+import { db } from "../lib/prisma.js";
 import fs from "fs";
 import path from "path";
 import type {
 	ReportCreateInput,
 	ReportUpdateInput,
-} from "../models/report.models";
+} from "../models/report.models.js";
 
 export class ReportServices {
 	static async create(

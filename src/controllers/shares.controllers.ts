@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import { responseSuccess } from "../utils/response";
-import { customCatch } from "../utils/customCatch";
-import { SharesService } from "../services/shares.services";
-import { sharesSchema } from "../models/shares.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+import { responseSuccess } from "../utils/response.js";
+import { customCatch } from "../utils/customCatch.js";
+import { SharesService } from "../services/shares.services.js";
+import { sharesSchema } from "../models/shares.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class SharesController {
     static async getAll(req: Request, res: Response) {

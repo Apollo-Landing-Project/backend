@@ -1,5 +1,5 @@
-import { db } from "../lib/prisma";
-import type { SharesInput } from "../models/shares.models";
+import { db } from "../lib/prisma.js";
+import type { SharesInput } from "../models/shares.models.js";
 
 export class SharesService {
     // --- GET ALL ---

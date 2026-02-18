@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { TranslateController } from "../controllers/transalate.controllers";
+import { TranslateController } from "../controllers/transalate.controllers.js";
 import rateLimit from "express-rate-limit";
 
 const translateRoutes = Router();

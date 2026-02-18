@@ -1,8 +1,8 @@
 import type { Request, Response } from "express";
-import { responseSuccess } from "../utils/response";
-import { customCatch } from "../utils/customCatch";
-import { CarGalleryService } from "../services/carGallery.services";
-import { carGallerySchema } from "../models/carGallery.models";
+import { responseSuccess } from "../utils/response.js";
+import { customCatch } from "../utils/customCatch.js";
+import { CarGalleryService } from "../services/carGallery.services.js";
+import { carGallerySchema } from "../models/carGallery.models.js";
 
 export class CarGalleryController {
 	static async getAll(req: Request, res: Response) {

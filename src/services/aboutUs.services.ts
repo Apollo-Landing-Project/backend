@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 import "dotenv/config";
-import type { AboutPageInput } from "../models/aboutUsPage.models";
-import { db } from "../lib/prisma";
+import type { AboutPageInput } from "../models/aboutUsPage.models.js";
+import { db } from "../lib/prisma.js";
 
 // Type Helper
 type UploadedFiles = { [fieldname: string]: Express.Multer.File[] } | undefined;
@@ -120,12 +120,12 @@ export class AboutUsPageServices {
 						vision_title: data.vision_title,
 						vision_desc: data.vision_desc,
 						vision_badge: data.vision_badge ?? null,
-						vision_quote: data.vision_quote,
+						vision_quote: data.vision_quote ?? null,
 						vision_list: data.vision_list,
 						mission_title: data.mission_title,
 						mission_desc: data.mission_desc,
 						mission_badge: data.mission_badge ?? null,
-						mission_quote: data.mission_quote,
+						mission_quote: data.mission_quote ?? null,
 						mission_list: data.mission_list,
 						history_title: data.history_title,
 						history_desc: data.history_desc,
@@ -297,12 +297,12 @@ export class AboutUsPageServices {
 						vision_title: data.vision_title,
 						vision_desc: data.vision_desc,
 						vision_badge: data.vision_badge ?? null,
-						vision_quote: data.vision_quote,
+						vision_quote: data.vision_quote ?? null,
 						vision_list: data.vision_list,
 						mission_title: data.mission_title,
 						mission_desc: data.mission_desc,
 						mission_badge: data.mission_badge ?? null,
-						mission_quote: data.mission_quote,
+						mission_quote: data.mission_quote ?? null,
 						mission_list: data.mission_list,
 						history_title: data.history_title,
 						history_desc: data.history_desc,

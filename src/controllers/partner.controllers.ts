@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import { responseSuccess } from "../utils/response";
-import { customCatch } from "../utils/customCatch";
-import { PartnerService } from "../services/partner.services";
-import { partnerSchema } from "../models/partner.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+import { responseSuccess } from "../utils/response.js";
+import { customCatch } from "../utils/customCatch.js";
+import { PartnerService } from "../services/partner.services.js";
+import { partnerSchema } from "../models/partner.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class PartnerController {
     static async getAll(req: Request, res: Response) {

@@ -1,8 +1,8 @@
-import { db } from "../lib/prisma";
+import { db } from "../lib/prisma.js";
 import fs from "fs";
 import path from "path";
 import "dotenv/config";
-import type { CarGalleryInput } from "../models/service.models";
+import type { CarGalleryInput } from "../models/service.models.js";
 
 // --- HELPERS ---
 const deleteFile = (url: string | null) => {

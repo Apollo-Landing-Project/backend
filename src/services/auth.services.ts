@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import type { User } from "../../generated/prisma/client";
-import { envConfig } from "../config/env.config";
+import type { User } from "../../generated/prisma/client.js";
+import { envConfig } from "../config/env.config.js";
 
 export class AuthServices {
 	static generateToken(user: User): string {

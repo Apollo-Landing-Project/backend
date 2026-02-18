@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { InvestorPageControllers } from "../controllers/investorPage.controllers";
-import { uploadImage } from "../config/uploadImage.config";
+import { InvestorPageControllers } from "../controllers/investorPage.controllers.js";
+import { uploadImage } from "../config/uploadImage.config.js";
 
 export const investorPageRoutes = Router();
 

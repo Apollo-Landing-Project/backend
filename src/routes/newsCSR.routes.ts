@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { NewsCSRControllers } from "../controllers/newsCSR.controllers";
-import { uploadImage } from "../config/uploadImage.config";
+import { NewsCSRControllers } from "../controllers/newsCSR.controllers.js";
+import { uploadImage } from "../config/uploadImage.config.js";
 
 export const newsCSRRoutes = Router();
 

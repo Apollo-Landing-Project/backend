@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ReportCategoryControllers } from "../controllers/reportCategory.controllers";
+import { ReportCategoryControllers } from "../controllers/reportCategory.controllers.js";
 
 export const reportCategoryRoutes = Router();
 

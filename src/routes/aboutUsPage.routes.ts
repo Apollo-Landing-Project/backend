@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { uploadImage } from "../config/uploadImage.config";
-import { AboutUsPageControllers } from "../controllers/aboutUsPage.controllers";
+import { uploadImage } from "../config/uploadImage.config.js";
+import { AboutUsPageControllers } from "../controllers/aboutUsPage.controllers.js";
 
 export const aboutUsPageRoutes = Router();
 

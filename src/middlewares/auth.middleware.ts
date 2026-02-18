@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import type { JwtPayload } from "../models/auth.models";
-import { envConfig } from "../config/env.config";
-import { customCatch } from "../utils/customCatch";
+import type { JwtPayload } from "../models/auth.models.js";
+import { envConfig } from "../config/env.config.js";
+import { customCatch } from "../utils/customCatch.js";
 
 export function verifyToken(
 	req: Request & { user?: JwtPayload },

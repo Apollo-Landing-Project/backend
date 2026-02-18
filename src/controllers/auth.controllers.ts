@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
-import { customCatch } from "../utils/customCatch";
-import type { LoginInput, RegisterInput } from "../models/auth.models";
-import { UserServices } from "../services/user.service";
-import { responseSuccess } from "../utils/response";
-import { AuthServices } from "../services/auth.services";
-import { envConfig } from "../config/env.config";
+import { customCatch } from "../utils/customCatch.js";
+import type { LoginInput, RegisterInput } from "../models/auth.models.js";
+import { UserServices } from "../services/user.service.js";
+import { responseSuccess } from "../utils/response.js";
+import { AuthServices } from "../services/auth.services.js";
+import { envConfig } from "../config/env.config.js";
 
 export class AuthControllers {
 	private static getCookieOptions() {

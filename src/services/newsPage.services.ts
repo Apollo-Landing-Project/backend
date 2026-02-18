@@ -1,8 +1,8 @@
-import { envConfig } from "../config/env.config";
-import { db } from "../lib/prisma";
+import { envConfig } from "../config/env.config.js";
+import { db } from "../lib/prisma.js";
 import fs from "fs";
 import path from "path";
-import type { NewsPageCreateInput } from "../models/newsPage.models";
+import type { NewsPageCreateInput } from "../models/newsPage.models.js";
 
 export class NewsPageServices {
 	static async create(

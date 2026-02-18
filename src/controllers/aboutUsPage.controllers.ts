@@ -1,12 +1,12 @@
-import { responseSuccess } from "../utils/response";
-import { customCatch } from "../utils/customCatch";
+import { responseSuccess } from "../utils/response.js";
+import { customCatch } from "../utils/customCatch.js";
 import type { Request, Response } from "express";
-import { AboutUsPageServices } from "../services/aboutUs.services";
+import { AboutUsPageServices } from "../services/aboutUs.services.js";
 import {
 	aboutPageSchema,
 	type AboutPageInput,
-} from "../models/aboutUsPage.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+} from "../models/aboutUsPage.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class AboutUsPageControllers {
 	static async getAll(req: Request, res: Response) {

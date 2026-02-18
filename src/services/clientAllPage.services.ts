@@ -1,5 +1,5 @@
 import { title } from "node:process";
-import { db } from "../lib/prisma";
+import { db } from "../lib/prisma.js";
 
 export class ClientAllService {
 	static async getMetadata(lang: string, destination: string) {

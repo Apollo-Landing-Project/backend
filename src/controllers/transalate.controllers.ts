@@ -1,6 +1,6 @@
-import { translateSchema } from "../models/translate.models";
-import { customCatch } from "../utils/customCatch";
-import { responseError, responseSuccess } from "../utils/response";
+import { translateSchema } from "../models/translate.models.js";
+import { customCatch } from "../utils/customCatch.js";
+import { responseError, responseSuccess } from "../utils/response.js";
 import type { Request, Response } from "express";
 import { z } from "zod";
 

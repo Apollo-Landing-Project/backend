@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { uploadImage } from "../config/uploadImage.config";
-import { PartnerController } from "../controllers/partner.controllers";
+import { uploadImage } from "../config/uploadImage.config.js";
+import { PartnerController } from "../controllers/partner.controllers.js";
 
 export const partnerRoutes = Router();
 

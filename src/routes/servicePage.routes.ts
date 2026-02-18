@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { uploadImage } from "../config/uploadImage.config";
-import { ServicePageController } from "../controllers/servicePage.controllers";
+import { uploadImage } from "../config/uploadImage.config.js";
+import { ServicePageController } from "../controllers/servicePage.controllers.js";
 
 export const servicesPageRoutes = Router();
 const uploadHero = uploadImage.single("hero_bg");

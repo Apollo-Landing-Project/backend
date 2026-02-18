@@ -1,9 +1,9 @@
 import type { Request, Response } from "express";
-import { responseSuccess } from "../utils/response";
-import { customCatch } from "../utils/customCatch";
-import { ServiceItemService } from "../services/service.services";
-import { serviceItemSchema } from "../models/service.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+import { responseSuccess } from "../utils/response.js";
+import { customCatch } from "../utils/customCatch.js";
+import { ServiceItemService } from "../services/service.services.js";
+import { serviceItemSchema } from "../models/service.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class ServiceItemController {
 	static async getAll(req: Request, res: Response) {

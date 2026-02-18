@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { ReportControllers } from "../controllers/report.controllers";
-import { uploadReport } from "../config/uploadReport.config";
+import { ReportControllers } from "../controllers/report.controllers.js";
+import { uploadReport } from "../config/uploadReport.config.js";
 
 export const reportRoutes = Router();
 

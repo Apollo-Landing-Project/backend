@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
-import { customCatch } from "../utils/customCatch";
-import { responseSuccess } from "../utils/response";
-import { ReportServices } from "../services/report.services";
+import { customCatch } from "../utils/customCatch.js";
+import { responseSuccess } from "../utils/response.js";
+import { ReportServices } from "../services/report.services.js";
 import {
     reportCreateSchema,
     reportUpdateSchema,
-} from "../models/report.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+} from "../models/report.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class ReportControllers {
     static async getAll(req: Request, res: Response) {

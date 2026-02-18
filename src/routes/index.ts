@@ -1,23 +1,23 @@
 import { Router, type Request, type Response } from "express";
-import { authRoutes } from "./auth.routes";
-import { verifyToken } from "../middlewares/auth.middleware";
-import { responseSuccess } from "../utils/response";
-import { homePageRoutes } from "./homePage.routes";
-import translateRoutes from "./translate.routes";
-import { clientAllPage } from "./clientAllPage.route";
-import { newsPageRoutes } from "./newsPage.routes";
-import { aboutUsPageRoutes } from "./aboutUsPage.routes";
-import { servicesPageRoutes } from "./servicePage.routes";
-import { serviceRoutes } from "./service.routes";
-import { carGalleryRoutes } from "./carGallery.routes";
-import { newsNewsRoutes } from "./newsNews.routes";
-import { newsCSRRoutes } from "./newsCSR.routes";
-import { partnerRoutes } from "./partner.routes";
-import { investorPageRoutes } from "./investorPage.routes";
-import { sharesRoutes } from "./shares.routes";
+import { authRoutes } from "./auth.routes.js";
+import { verifyToken } from "../middlewares/auth.middleware.js";
+import { responseSuccess } from "../utils/response.js";
+import { homePageRoutes } from "./homePage.routes.js";
+import translateRoutes from "./translate.routes.js";
+import { clientAllPage } from "./clientAllPage.route.js";
+import { newsPageRoutes } from "./newsPage.routes.js";
+import { aboutUsPageRoutes } from "./aboutUsPage.routes.js";
+import { servicesPageRoutes } from "./servicePage.routes.js";
+import { serviceRoutes } from "./service.routes.js";
+import { carGalleryRoutes } from "./carGallery.routes.js";
+import { newsNewsRoutes } from "./newsNews.routes.js";
+import { newsCSRRoutes } from "./newsCSR.routes.js";
+import { partnerRoutes } from "./partner.routes.js";
+import { investorPageRoutes } from "./investorPage.routes.js";
+import { sharesRoutes } from "./shares.routes.js";
 
-import { reportCategoryRoutes } from "./reportCategory.routes";
-import { reportRoutes } from "./report.routes";
+import { reportCategoryRoutes } from "./reportCategory.routes.js";
+import { reportRoutes } from "./report.routes.js";
 
 export const router = Router();
 

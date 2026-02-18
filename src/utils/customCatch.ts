@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
 import jwt from "jsonwebtoken";
-import { responseError } from "./response";
+import { responseError } from "./response.js";
 import { type Response } from "express";
 
 export const customCatch = (e: unknown, res: Response) => {

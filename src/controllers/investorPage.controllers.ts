@@ -1,13 +1,13 @@
 import type { Request, Response } from "express";
-import { customCatch } from "../utils/customCatch";
-import { responseSuccess } from "../utils/response";
-import { InvestorPageServices } from "../services/investorPage.services";
+import { customCatch } from "../utils/customCatch.js";
+import { responseSuccess } from "../utils/response.js";
+import { InvestorPageServices } from "../services/investorPage.services.js";
 import {
     investorPageCreateSchema,
     investorPageUpdateSchema,
     type InvestorPageUpdateInput,
-} from "../models/investorPage.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+} from "../models/investorPage.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class InvestorPageControllers {
     static async getAll(req: Request, res: Response) {

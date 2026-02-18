@@ -1,6 +1,6 @@
 import type { ZodSchema } from "zod";
 import type { Request, Response, NextFunction } from "express";
-import { customCatch } from "../utils/customCatch";
+import { customCatch } from "../utils/customCatch.js";
 
 export const validate =
 	(schema: ZodSchema) => (req: Request, res: Response, next: NextFunction) => {

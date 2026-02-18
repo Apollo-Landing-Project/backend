@@ -2,16 +2,16 @@
 	// Visit https://aka.ms/tsconfig to read more about this file
 	"compilerOptions": {
 		// File Layout
-		"rootDir": "./src",
-		"outDir": "./dist",
+		// "rootDir": "",
+		"outDir": "dist",
 		// Environment Settings
 		// See also https://aka.ms/tsconfig/module
 		"types": [],
-		"module": "ESNext",
-		"moduleResolution": "bundler",
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 		"target": "ES2023",
 		"esModuleInterop": true,
-		"ignoreDeprecations": "6.0",
+		// "ignoreDeprecations": "6.0",
 		// For nodejs:
 		// "lib": ["esnext"],
 		// "types": ["node"],
@@ -40,6 +40,6 @@
 		"skipLibCheck": true
 	},
 	"include": [
-		"src/**/*"
+		"src", "generated"
 	]
 }

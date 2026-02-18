@@ -1,8 +1,8 @@
-import { db } from "../lib/prisma";
+import { db } from "../lib/prisma.js";
 import fs from "fs";
 import path from "path";
 import "dotenv/config";
-import type { PartnerInput } from "../models/partner.models";
+import type { PartnerInput } from "../models/partner.models.js";
 
 // --- HELPERS ---
 const deleteFile = (url: string | null) => {

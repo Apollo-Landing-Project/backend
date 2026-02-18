@@ -1,14 +1,14 @@
 import type { Request, Response } from "express";
-import { customCatch } from "../utils/customCatch";
-import { responseSuccess } from "../utils/response";
-import { HomePageServices } from "../services/homePage.services";
-import { NewsPageServices } from "../services/newsPage.services";
+import { customCatch } from "../utils/customCatch.js";
+import { responseSuccess } from "../utils/response.js";
+import { HomePageServices } from "../services/homePage.services.js";
+import { NewsPageServices } from "../services/newsPage.services.js";
 import {
 	newsPageCreateSchema,
 	newsPageUpdateSchema,
 	type NewsPageUpdateInput,
-} from "../models/newsPage.models";
-import { RevalidatedServices } from "../services/revalidated.services";
+} from "../models/newsPage.models.js";
+import { RevalidatedServices } from "../services/revalidated.services.js";
 
 export class NewsPageControllers {
 	static async getAll(req: Request, res: Response) {
